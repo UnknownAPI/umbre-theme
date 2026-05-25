@@ -222,7 +222,9 @@ describe("Umbra surface recipes", () => {
           borders: borderVariants[2],
         });
         const colors = workbenchColors(model);
-        const contrast = contrastRatio(colors["terminal.background"], model.surfaces.editor);
+        const terminalBackground = colors["terminal.background"];
+        expect(terminalBackground).toBeTruthy();
+        const contrast = contrastRatio(terminalBackground!, model.surfaces.editor);
 
         if (previousContrast !== undefined) {
           expect(contrast).toBeGreaterThan(previousContrast);
@@ -261,10 +263,8 @@ describe("Umbra variant colors", () => {
               expect(Object.keys(semanticTokens).length).toBeGreaterThan(0);
               expect(colors["panel.border"] === transparent()).toBe(borders.opacity === 0);
 
-              if (borders.opacity === 0) {
-                expect(colors["window.activeBorder"]).toBe(model.surfaces.editor);
-                expect(colors["window.inactiveBorder"]).toBe(model.surfaces.editor);
-              }
+              expect(colors["window.activeBorder"]).toBe(colors["sideBar.background"]);
+              expect(colors["window.inactiveBorder"]).toBe(colors["sideBar.background"]);
 
               assertModelContrast(model);
               variantCount += 1;

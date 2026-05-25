@@ -76,6 +76,6 @@ export const titleAndStatusColors = ({ accent, surfaces, uiSyntax: syntax }: The
   "statusBarItem.errorForeground": readableOn(syntax.invalid),
   "statusBarItem.warningBackground": syntax.warning,
   "statusBarItem.warningForeground": readableOn(syntax.warning),
-  "window.activeBorder": surfaces.editor,
-  "window.inactiveBorder": surfaces.editor,
+  "window.activeBorder": surfaces.chrome2,
+  "window.inactiveBorder": surfaces.chrome2,
 });
