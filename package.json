@@ -17,7 +17,9 @@
     "install:cursor": "bun scripts/install.ts --cursor",
     "install:vscode": "bun scripts/install.ts --vscode",
     "lint": "oxlint --fix",
+    "lint:staged": "lint-staged",
     "package": "bun scripts/package.ts",
+    "prepare": "husky",
     "test": "bun test"
   },
   "dependencies": {
@@ -37,6 +39,8 @@
     "@vscode/vsce": "^3.9.1",
     "esbuild": "^0.28.0",
     "execa": "^9.6.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "only-allow": "^1.2.2",
     "oxfmt": "^0.51.0",
     "oxlint": "^1.66.0",
