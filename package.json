@@ -1,10 +1,19 @@
 {
   "name": "umbre-theme",
   "displayName": "Umbre",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "A quiet, deeply customizable theme for focused coding.",
+  "homepage": "https://github.com/ohkimur/umbre-theme#readme",
+  "bugs": {
+    "url": "https://github.com/ohkimur/umbre-theme/issues"
+  },
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ohkimur/umbre-theme.git"
+  },
+  "publisher": "ohkimur",
   "type": "module",
   "scripts": {
     "preinstall": "npx only-allow@1.2.2 bun",
@@ -19,6 +28,8 @@
     "lint": "oxlint --fix",
     "lint:staged": "lint-staged",
     "package": "bun scripts/package.ts",
+    "release": "semantic-release",
+    "release:dry": "semantic-release --dry-run",
     "prepare": "husky",
     "test": "bun test"
   },
@@ -31,7 +42,10 @@
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
-    "@inquirer/prompts": "^8.4.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/github": "^12.0.2",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/bun": "^1.3.14",
     "@types/culori": "^4.0.1",
     "@types/node": "^25.9.1",
@@ -41,9 +55,10 @@
     "execa": "^9.6.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "only-allow": "^1.2.2",
+    "ovsx": "^0.10.5",
     "oxfmt": "^0.51.0",
     "oxlint": "^1.66.0",
+    "semantic-release": "^25.0.3",
     "typescript": "^6.0.3"
   },
   "lint-staged": {
