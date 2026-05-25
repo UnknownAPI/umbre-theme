@@ -57,9 +57,9 @@ const pickConfigurationTarget = async (current: UmbraSettings): Promise<Configur
         value: "accent",
       },
       {
-        label: "Theme color dimming",
+        label: "Editor color dimming",
         description: `Level ${current.dim.level}: ${current.dim.label}`,
-        detail: "Balance syntax, foreground, sidebar, panel, and terminal intensity.",
+        detail: "Balance syntax color intensity without changing the workbench shade.",
         value: "dimming",
       },
       {
@@ -200,7 +200,7 @@ const pickDimming = async (
       value: dim,
       current: current.dim.id === dim.id,
     })),
-    "Umbra: select theme color dimming",
+    "Umbra: select editor color dimming",
     (dim) => ({ ...current, dim }),
     previewSettings,
   );

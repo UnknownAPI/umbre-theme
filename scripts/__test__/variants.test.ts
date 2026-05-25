@@ -86,7 +86,7 @@ describe("Umbra surface recipes", () => {
     expect(contrastRatio(pureBlack.surfaces.raised, pureBlack.surfaces.editor)).toBeGreaterThanOrEqual(1.2);
   });
 
-  test("dimming affects package chrome as well as editor syntax", () => {
+  test("dimming changes editor syntax without changing workbench surfaces", () => {
     for (const mode of modes) {
       const shade = mode === "dark" ? shadeVariants[2] : shadeVariants[0];
       const balanced = createThemeModel({
@@ -104,8 +104,9 @@ describe("Umbra surface recipes", () => {
         borders: borderVariants[0],
       });
 
-      expect(veryDim.surfaces.chrome2).not.toBe(balanced.surfaces.chrome2);
-      expect(veryDim.surfaces.deemphasized).not.toBe(balanced.surfaces.deemphasized);
+      expect(veryDim.syntax.keyword).not.toBe(balanced.syntax.keyword);
+      expect(veryDim.surfaces).toEqual(balanced.surfaces);
+      expect(veryDim.accent).toEqual(balanced.accent);
     }
   });
 });

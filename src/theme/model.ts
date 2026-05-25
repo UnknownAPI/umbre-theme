@@ -21,7 +21,7 @@ export const createThemeModel = ({
   dim,
   borders,
 }: ThemeModelInput): ThemeModel => {
-  const surfaces = createSurfaces(mode, shade, dim);
+  const surfaces = createSurfaces(mode, shade);
 
   return {
     mode,
@@ -29,7 +29,7 @@ export const createThemeModel = ({
     accentFamily,
     dim,
     borders,
-    accent: createAccent(mode, accentFamily, dim),
+    accent: createAccent(mode, accentFamily),
     surfaces,
     syntax: createSyntax(mode, accentFamily, dim, surfaces),
   };
