@@ -23,9 +23,9 @@ bun run test
 Useful local commands:
 
 ```bash
-bun run dev:code       # build and open a VS Code extension-development window
-bun run dev:cursor     # build and open a Cursor extension-development window
-bun run package        # create umbre-theme.vsix from the existing dist/
+bun run dev:code       # build and open a VS Code theme-development window
+bun run dev:cursor     # build and open a Cursor theme-development window
+bun run package        # create the VSIX package from the existing dist/
 ```
 
 ## Pull request guidelines
@@ -36,16 +36,20 @@ bun run package        # create umbre-theme.vsix from the existing dist/
 - Include a short description of what changed and why.
 - For visual theme changes, describe the affected mode, surface, token group, or command flow.
 
-## Publishing secrets
+## Releasing
 
-Publishing runs from `.github/workflows/publish-extension.yml` and uses GitHub Actions repository secrets. Use `.env.example` as the checklist for the required token names and where to create them.
+Releases are automated with `semantic-release` from conventional commits on `main`. A release builds and packages the theme, publishes the VSIX to the Visual Studio Marketplace and Open VSX, then attaches it to the GitHub Release.
 
-Required secrets:
+Required GitHub Actions secrets:
 
 - `VSCE_PAT` — Azure DevOps Personal Access Token with **Marketplace: Manage** scope for the Visual Studio Marketplace.
 - `OVSX_PAT` — Open VSX access token for Cursor-compatible distribution through Open VSX.
 
-Add them in GitHub under **Repository → Settings → Secrets and variables → Actions → New repository secret**.
+Use `.env.example` as the setup checklist for both tokens. Local previews are available with:
+
+```bash
+bun run release:dry
+```
 
 ## Project guardrails
 

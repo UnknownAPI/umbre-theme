@@ -5,51 +5,42 @@
 <h1 align="center">Umbre</h1>
 
 <p align="center">
-  A quiet, deeply customizable theme for focused coding in VS Code and Cursor.
+  A quiet theme for VS Code and Cursor.
 </p>
 
 <p align="center">
-  <strong>Shape the mood of your whole editor without cluttering your settings.</strong>
+  <strong>Dark and light themes with simple built-in customization.</strong>
 </p>
 
 ---
 
-Umbre is built for people who want their editor to feel calm, intentional, and personal. It includes two polished themes, **Umbre Dark** and **Umbre Light**, plus a guided configuration flow that lets you tune the experience without digging through color tokens by hand.
+Umbre includes **Umbre Dark** and **Umbre Light**. The defaults are calm and low contrast, but you can tune the theme from the Command Palette without editing JSON or adding color overrides to your settings.
 
-Use the defaults for a balanced, distraction-free workspace, or adjust the details until the editor feels exactly right for your eyes, your room, and your workflow.
+## Install
 
-## What you can customize
+Umbre is published on:
 
-Umbre gives you control over the parts of the editor that shape how it feels day to day:
+- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ohkimur.umbre-theme)
+- [Open VSX](https://open-vsx.org/extension/ohkimur/umbre-theme)
 
-- **Overall shade** — choose from soft, balanced, deep, and high-focus surface levels.
-- **Accent color** — pick the color family used for highlights and active UI elements.
-- **Syntax strength** — make code colors vivid, soft, muted, or nearly monochrome.
-- **Panels and sidebars** — control how much separation the workspace chrome has from the editor.
-- **Terminal contrast** — tune terminal colors independently from the rest of the UI.
-- **Borders** — choose subtle structure, stronger separation, or hidden borders.
+After installing, open **Preferences: Color Theme** and choose **Umbre Dark** or **Umbre Light**.
 
-## Why Umbre?
+## Customize
 
-- **Calm by default** — designed for long coding sessions without visual noise.
-- **Powerful when you want it** — customize the editor, panels, terminal, syntax, accents, and borders from one friendly command.
-- **Dark and light together** — move between `Umbre Dark` and `Umbre Light` as your environment changes.
-- **Preview before applying** — explore changes safely, then keep only the final version you like.
-- **No settings clutter** — Umbre stores its own configuration and writes Umbre-owned generated theme files instead of filling your editor settings with overrides.
-- **Pairs well with clean icon themes** — especially the Symbols icon theme (`miguelsolorio.symbols`).
+Run **Umbre: Configure Theme** from the Command Palette.
 
-## Getting started
+You can change:
 
-1. Install Umbre.
-2. Open **Preferences: Color Theme**.
-3. Choose **Umbre Dark** or **Umbre Light**.
-4. Run **Umbre: Configure Theme** from the Command Palette when you want to personalize it.
+- **Shade**: choose a softer or deeper editor background.
+- **Accent**: pick the highlight color family.
+- **Syntax strength**: keep code colors vivid, soften them, or make them nearly monochrome.
+- **Panels and sidebars**: control how much the workbench chrome stands apart from the editor.
+- **Terminal contrast**: tune the terminal background separately.
+- **Borders**: hide separators or make the workspace structure clearer.
+
+Changes preview while you choose. When you apply them, Umbre updates its own generated theme files and keeps your editor settings clean.
 
 ## Commands
 
-- **Umbre: Configure Theme** — tune the active Umbre theme with guided previews.
-- **Umbre: Toggle Opposite Dark/Light Mode** — prepare the opposite Umbre mode without changing your editor settings. Select the matching Umbre theme from the Color Theme picker to switch modes.
-
-## Open source
-
-Umbre is open source under the Apache License 2.0.
+- **Umbre: Configure Theme**: customize the active Umbre theme.
+- **Umbre: Configure Opposite Theme**: prepare the other dark or light mode before switching to it from the Color Theme picker.
