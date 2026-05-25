@@ -43,7 +43,7 @@ export const createExtensionManifest = (themes: ThemeContribution[]): ExtensionM
   activationEvents: ["onCommand:umbre.configure", "onCommand:umbre.toggleMode", "onStartupFinished"],
   repository: {
     type: "git",
-    url: "https://github.com/ohkimur/umbra-theme.git",
+    url: "https://github.com/ohkimur/umbre-theme.git",
     directory: ".",
   },
   files: ["extension.js", "assets/**", "themes/**", "README.md", "LICENSE", "package.json"],

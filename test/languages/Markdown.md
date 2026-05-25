@@ -5,7 +5,7 @@
 - **Bold** text
 - _Italic_ text
 - `inlineCode()`
-- [Umbre](https://github.com/ohkimur/umbra-theme)
+- [Umbre](https://github.com/ohkimur/umbre-theme)
 
 ```ts
 const theme = {
