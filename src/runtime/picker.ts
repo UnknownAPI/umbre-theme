@@ -57,9 +57,9 @@ const pickConfigurationTarget = async (current: UmbraSettings): Promise<Configur
         value: "accent",
       },
       {
-        label: "Editor colors",
-        description: `Level ${current.dim.level}: ${current.dim.label}`,
-        detail: "Tune syntax color intensity only; surfaces and panels stay unchanged.",
+        label: "Editor dimming",
+        description: `Level ${current.dim.level}`,
+        detail: "Tune syntax color intensity in the editor only.",
         value: "dimming",
       },
       {
@@ -71,7 +71,7 @@ const pickConfigurationTarget = async (current: UmbraSettings): Promise<Configur
       {
         label: "Configure all",
         description: "Guided setup",
-        detail: "Step through mode, shade, accent, editor colors, and borders.",
+        detail: "Step through mode, shade, accent, editor dimming, and borders.",
         value: "all",
       },
     ],
@@ -195,12 +195,11 @@ const pickDimming = async (
   return pickValue(
     dimVariants.map((dim) => ({
       label: itemLabel(`Level ${dim.level}`, current.dim.id === dim.id),
-      description: dim.label,
       detail: levelSlider(dim.level),
       value: dim,
       current: current.dim.id === dim.id,
     })),
-    "Umbra: select editor color intensity",
+    "Umbra: select editor dimming",
     (dim) => ({ ...current, dim }),
     previewSettings,
   );

@@ -87,7 +87,7 @@ describe("Umbra surface recipes", () => {
     expect(contrastRatio(pureBlack.surfaces.raised, pureBlack.surfaces.editor)).toBeGreaterThanOrEqual(1.2);
   });
 
-  test("editor color intensity changes syntax without changing workbench colors", () => {
+  test("editor dimming changes syntax without changing workbench colors", () => {
     for (const mode of modes) {
       const shade = mode === "dark" ? shadeVariants[2] : shadeVariants[0];
       const fullColor = createThemeModel({

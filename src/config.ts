@@ -68,31 +68,26 @@ export const dimVariants = [
   {
     id: "1",
     level: 1,
-    label: "Full color",
     syntaxMix: 0.14,
   },
   {
     id: "2",
     level: 2,
-    label: "Soft color",
     syntaxMix: 0.22,
   },
   {
     id: "3",
     level: 3,
-    label: "Quiet color",
     syntaxMix: 0.3,
   },
   {
     id: "4",
     level: 4,
-    label: "Muted color",
     syntaxMix: 0.4,
   },
   {
     id: "5",
     level: 5,
-    label: "Faint color",
     syntaxMix: 0.5,
   },
 ] as const;
