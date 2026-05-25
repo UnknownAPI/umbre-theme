@@ -1,55 +1,55 @@
-# Umbra
+<p align="center">
+  <img src="./assets/logo.png" width="112" alt="Umbra logo">
+</p>
 
-A quiet Tailwind theme for focused coding in VS Code and Cursor.
+<h1 align="center">Umbra</h1>
 
-Umbra exposes only two editor themes: `Umbra Dark` and `Umbra Light`. The configuration command keeps the theme picker clean while letting you tune shade, accent, editor dimming, panel contrast, terminal contrast, and border intensity. Default Tailwind colors are the only source colors.
+<p align="center">
+  A quiet, deeply customizable theme for focused coding in VS Code and Cursor.
+</p>
 
-## Features
+<p align="center">
+  <strong>Shape the mood of your whole editor without cluttering your settings.</strong>
+</p>
 
-- Dark and light themes with consistent Tailwind-derived color formulas.
-- Five shade levels for the base surfaces.
-- Seventeen Tailwind accent families.
-- Five labeled editor-only dimming levels for syntax colors.
-- Five labeled panel contrast levels for sidebars, panels, tabs, and widgets.
-- Five labeled terminal contrast levels.
-- Five labeled border intensity levels, including hidden borders.
-- A recommended defaults reset: level 3 for shade, syntax, panels, and terminal; level 2 borders.
-- Generated Umbra-owned theme files instead of `workbench.colorCustomizations` or token customization settings.
-- Pairs nicely with the Symbols icon theme (`miguelsolorio.symbols`).
+---
+
+Umbra is built for people who want their editor to feel calm, intentional, and personal. It includes two polished themes, **Umbra Dark** and **Umbra Light**, plus a guided configuration flow that lets you tune the experience without digging through color tokens by hand.
+
+Use the defaults for a balanced, distraction-free workspace, or adjust the details until the editor feels exactly right for your eyes, your room, and your workflow.
+
+## What you can customize
+
+Umbra gives you control over the parts of the editor that shape how it feels day to day:
+
+- **Overall shade** — choose from soft, balanced, deep, and high-focus surface levels.
+- **Accent color** — pick the color family used for highlights and active UI elements.
+- **Syntax strength** — make code colors vivid, soft, muted, or nearly monochrome.
+- **Panels and sidebars** — control how much separation the workspace chrome has from the editor.
+- **Terminal contrast** — tune terminal colors independently from the rest of the UI.
+- **Borders** — choose subtle structure, stronger separation, or hidden borders.
+
+## Why Umbra?
+
+- **Calm by default** — designed for long coding sessions without visual noise.
+- **Powerful when you want it** — customize the editor, panels, terminal, syntax, accents, and borders from one friendly command.
+- **Dark and light together** — move between `Umbra Dark` and `Umbra Light` as your environment changes.
+- **Preview before applying** — explore changes safely, then keep only the final version you like.
+- **No settings clutter** — Umbra stores its own configuration and writes Umbra-owned generated theme files instead of filling your editor settings with overrides.
+- **Pairs well with clean icon themes** — especially the Symbols icon theme (`miguelsolorio.symbols`).
+
+## Getting started
+
+1. Install Umbra.
+2. Open **Preferences: Color Theme**.
+3. Choose **Umbra Dark** or **Umbra Light**.
+4. Run **Umbra: Configure Theme** from the Command Palette when you want to personalize it.
 
 ## Commands
 
-```bash
-bun install
-bun run format      # fixes formatting
-bun run lint        # fixes lint issues
-bun run typecheck   # TypeScript check
-bun run test
-bun run build          # create dist/
-bun run package        # create umbra-theme.vsix from the existing dist/
-bun run dev:cursor     # fresh build and open a new extension-development Cursor window
-bun run dev:code       # fresh build and open a new extension-development VS Code window
-bun run install:cursor # install the existing VSIX into Cursor
-bun run install:vscode # install the existing VSIX into VS Code
-```
+- **Umbra: Configure Theme** — tune the active Umbra theme with guided previews.
+- **Umbra: Toggle Opposite Dark/Light Mode** — prepare the opposite Umbra mode without changing your editor settings. Select the matching Umbra theme from the Color Theme picker to switch modes.
 
-A full local release loop is: dev, build, package, install. The package script uses the existing `dist/`, and the install scripts install the already-packaged `umbra-theme.vsix`; run `bun run build && bun run package` first after code changes. After installing into an already-open editor window, run `Developer: Reload Window` once so the window uses the new extension build. Umbra never writes editor settings, so select `Umbra Dark` or `Umbra Light` from `Preferences: Color Theme` yourself.
+## Open source
 
-## Editor commands
-
-Run these from the Command Palette:
-
-- `Umbra: Configure Theme` — choose what to edit, preview through generated theme files, then apply once when finished.
-- `Umbra: Toggle Opposite Dark/Light Mode` — prepare the opposite Umbra mode without writing editor settings; select `Umbra Dark`/`Umbra Light` in the Color Theme picker to switch the active mode.
-
-## Project layout
-
-```text
-umbra-theme/
-├── src/                 # runtime extension and theme color model
-├── scripts/             # build, package, install, and validation entrypoints
-├── test/                # sample files for visual inspection
-└── dist/                # generated extension output (ignored)
-```
-
-`dist/` and `umbra-theme.vsix` are generated artifacts and stay ignored. Rebuild them with `bun run build && bun run package`. Umbra does not write user/editor settings; configuration is stored in extension global state and applied by writing Umbra-owned generated theme files.
+Umbra is open source under the Apache License 2.0.
