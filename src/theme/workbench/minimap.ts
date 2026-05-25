@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { black, white, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const minimapColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const minimapColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "minimap.background": surfaces.editor,
   "minimap.foregroundOpacity": withAlpha(surfaces.isDark ? black() : white(), surfaces.isDark ? 0.73 : 0.67),
   "minimap.selectionHighlight": withAlpha(surfaces.inverse, surfaces.isDark ? 0.2 : 0.14),

@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { transparent, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const diagnosticsColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const diagnosticsColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "editorError.foreground": syntax.invalid,
   "editorError.border": transparent(),
   "editorWarning.foreground": syntax.warning,
@@ -28,7 +28,7 @@ export const diagnosticsColors = ({ accent, surfaces, syntax }: ThemeModel): Col
   "editorOverviewRuler.deletedForeground": withAlpha(syntax.removed, 0.38),
 });
 
-export const debugColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const debugColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "debugToolBar.background": surfaces.overlay,
   "debugToolBar.border": surfaces.lineStrong,
   "debugIcon.breakpointForeground": syntax.invalid,

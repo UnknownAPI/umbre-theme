@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { mix, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const vcsColors = ({ surfaces, syntax }: ThemeModel): ColorMap => {
+export const vcsColors = ({ surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => {
   const diffAlpha = surfaces.isDark ? 0.24 : 0.16;
   const decorationMix = surfaces.isDark ? 0.42 : 0.48;
 

@@ -38,22 +38,22 @@ const createDarkSurfaces = (shade: ShadeVariant): Surfaces => {
 };
 
 const createDarkLayers = (bg: string, depth: number): SurfaceLayers => ({
-  chrome0: mix(bg, tw("zinc", 950), 0.34 + depth * 0.12),
-  chrome1: mix(bg, tw("zinc", 900), 0.22 + (1 - depth) * 0.12),
-  chrome2: mix(bg, tw("zinc", 900), 0.3 + (1 - depth) * 0.12),
-  chrome3: mix(bg, tw("zinc", 800), 0.16 + (1 - depth) * 0.06),
-  overlay: mix(bg, tw("zinc", 800), 0.24 + (1 - depth) * 0.06),
-  overlay2: mix(bg, tw("zinc", 700), 0.2 + (1 - depth) * 0.06),
-  raised: mix(bg, tw("zinc", 700), 0.26 + (1 - depth) * 0.08),
+  chrome0: mix(bg, tw("zinc", 950), 0.24 + depth * 0.08),
+  chrome1: mix(bg, tw("zinc", 900), 0.12 + (1 - depth) * 0.08),
+  chrome2: mix(bg, tw("zinc", 900), 0.16 + (1 - depth) * 0.08),
+  chrome3: mix(bg, tw("zinc", 800), 0.1 + (1 - depth) * 0.04),
+  overlay: mix(bg, tw("zinc", 800), 0.18 + (1 - depth) * 0.04),
+  overlay2: mix(bg, tw("zinc", 700), 0.16 + (1 - depth) * 0.05),
+  raised: mix(bg, tw("zinc", 700), 0.22 + (1 - depth) * 0.06),
 });
 
 const createPureBlackLayers = (bg: string): SurfaceLayers => ({
-  chrome0: mix(bg, tw("zinc", 900), 0.64),
-  chrome1: mix(bg, tw("zinc", 900), 0.74),
-  chrome2: mix(bg, tw("zinc", 900), 0.78),
-  chrome3: mix(bg, tw("zinc", 800), 0.66),
-  overlay: mix(bg, tw("zinc", 800), 0.66),
-  overlay2: mix(bg, tw("zinc", 700), 0.58),
+  chrome0: mix(bg, tw("zinc", 900), 0.36),
+  chrome1: mix(bg, tw("zinc", 900), 0.42),
+  chrome2: mix(bg, tw("zinc", 900), 0.46),
+  chrome3: mix(bg, tw("zinc", 800), 0.38),
+  overlay: mix(bg, tw("zinc", 800), 0.5),
+  overlay2: mix(bg, tw("zinc", 700), 0.5),
   raised: mix(bg, tw("zinc", 700), 0.62),
 });
 
@@ -83,12 +83,12 @@ const createLightSurfaces = (shade: ShadeVariant): Surfaces => {
 };
 
 const createLightLayers = (bg: string, depth: number): SurfaceLayers => ({
-  chrome0: mix(bg, tw("zinc", 300), 0.12 + depth * 0.1),
-  chrome1: mix(bg, tw("zinc", 300), 0.08 + depth * 0.08),
-  chrome2: mix(bg, tw("zinc", 300), 0.12 + depth * 0.1),
-  chrome3: mix(bg, tw("zinc", 300), 0.16 + depth * 0.12),
+  chrome0: mix(bg, tw("zinc", 300), 0.08 + depth * 0.07),
+  chrome1: mix(bg, tw("zinc", 300), 0.05 + depth * 0.05),
+  chrome2: mix(bg, tw("zinc", 300), 0.08 + depth * 0.07),
+  chrome3: mix(bg, tw("zinc", 300), 0.1 + depth * 0.08),
   overlay: mix(bg, white(), 0.82 - depth * 0.22),
-  overlay2: mix(bg, tw("zinc", 300), 0.1 + depth * 0.12),
+  overlay2: mix(bg, tw("zinc", 300), 0.08 + depth * 0.08),
   raised: mix(mix(bg, white(), 0.82 - depth * 0.22), tw("zinc", 300), 0.24 + depth * 0.1),
 });
 

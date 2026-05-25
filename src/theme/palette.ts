@@ -9,6 +9,8 @@ type Scale = Partial<Record<Shade, string>>;
 type FlatTailwindColor = "black" | "white";
 
 const colorCache = new Map<string, string>();
+const alphaCache = new Map<string, string>();
+const mixCache = new Map<string, string>();
 
 export const tw = (family: string, shade: Shade): string => {
   const key = `${family}-${shade}`;
@@ -40,13 +42,27 @@ export const white = (): string => twFlat("white");
 export const transparent = (): string => withAlpha(black(), 0);
 
 export const withAlpha = (hex: string, opacity: number): string => {
+  const alpha = clamp(opacity, 0, 1);
+  const key = `${hex}:${alpha}`;
+  const cached = alphaCache.get(key);
+  if (cached) return cached;
+
   const parsed = parseColor(hex, hex);
-  return formatHex8({ ...parsed, alpha: clamp(opacity, 0, 1) }).toLowerCase();
+  const value = formatHex8({ ...parsed, alpha }).toLowerCase();
+  alphaCache.set(key, value);
+  return value;
 };
 
 export const mix = (from: string, to: string, amount: number): string => {
+  const clampedAmount = clamp(amount, 0, 1);
+  const key = `${from}:${to}:${clampedAmount}`;
+  const cached = mixCache.get(key);
+  if (cached) return cached;
+
   const mixer = interpolate([parseColor(from, from), parseColor(to, to)], "oklab");
-  return toHex(mixer(clamp(amount, 0, 1)), `${from} mixed with ${to}`).toLowerCase();
+  const value = toHex(mixer(clampedAmount), `${from} mixed with ${to}`).toLowerCase();
+  mixCache.set(key, value);
+  return value;
 };
 
 export const darken = (hex: string, amount: number): string => mix(hex, black(), amount);

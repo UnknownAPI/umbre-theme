@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { darken, lighten, tw, white } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const terminalColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => {
+export const terminalColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => {
   const lift = (hex: string): string => (surfaces.isDark ? lighten(hex, 0.12) : darken(hex, 0.08));
 
   return {

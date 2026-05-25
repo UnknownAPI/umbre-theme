@@ -35,7 +35,7 @@ export const quickInputColors = ({ surfaces }: ThemeModel): ColorMap => ({
   "keybindingLabel.bottomBorder": surfaces.lineStrong,
 });
 
-export const notificationColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const notificationColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "notifications.background": surfaces.overlay,
   "notifications.foreground": surfaces.fg,
   "notifications.border": surfaces.lineStrong,

@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { mix, transparent, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const editorColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const editorColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "editor.background": surfaces.editor,
   "editor.foreground": surfaces.fg,
   "editorGutter.background": surfaces.editor,
@@ -34,7 +34,7 @@ export const editorColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap
   "editor.snippetTabstopHighlightBackground": withAlpha(syntax.added, surfaces.isDark ? 0.18 : 0.12),
 });
 
-export const bracketColors = ({ surfaces, syntax }: ThemeModel): ColorMap => ({
+export const bracketColors = ({ surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "editorBracketHighlight.foreground1": mix(syntax.constant, surfaces.muted, 0.42),
   "editorBracketHighlight.foreground2": mix(syntax.operator, surfaces.muted, 0.42),
   "editorBracketHighlight.foreground3": mix(syntax.type, surfaces.muted, 0.42),

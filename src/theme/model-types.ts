@@ -72,4 +72,5 @@ export type ThemeModel = {
   accent: Accent;
   surfaces: Surfaces;
   syntax: Syntax;
+  uiSyntax: Syntax;
 };

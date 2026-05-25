@@ -1,4 +1,11 @@
-import type { AccentFamily, BorderVariant, DimVariant, Mode, ShadeVariant } from "@/config.ts";
+import {
+  defaultDimming,
+  type AccentFamily,
+  type BorderVariant,
+  type DimVariant,
+  type Mode,
+  type ShadeVariant,
+} from "@/config.ts";
 import { createAccent } from "@/theme/accent.ts";
 import type { ThemeModel } from "@/theme/model-types.ts";
 import { createSurfaces } from "@/theme/surfaces.ts";
@@ -22,6 +29,7 @@ export const createThemeModel = ({
   borders,
 }: ThemeModelInput): ThemeModel => {
   const surfaces = createSurfaces(mode, shade);
+  const syntax = createSyntax(mode, accentFamily, dim, surfaces);
 
   return {
     mode,
@@ -31,6 +39,8 @@ export const createThemeModel = ({
     borders,
     accent: createAccent(mode, accentFamily),
     surfaces,
-    syntax: createSyntax(mode, accentFamily, dim, surfaces),
+    syntax,
+    uiSyntax:
+      dim.id === defaultDimming.id ? syntax : createSyntax(mode, accentFamily, defaultDimming, surfaces),
   };
 };

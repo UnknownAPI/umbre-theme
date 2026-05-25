@@ -2,14 +2,14 @@
 
 A quiet Tailwind theme for focused coding in VS Code and Cursor.
 
-Umbra exposes only two editor themes: `Umbra Dark` and `Umbra Light`. The configuration command keeps the theme picker clean while letting you tune shade, accent, dimming, and border visibility. Default Tailwind colors are the only source colors.
+Umbra exposes only two editor themes: `Umbra Dark` and `Umbra Light`. The configuration command keeps the theme picker clean while letting you tune shade, accent, editor-only color intensity, and border visibility. Default Tailwind colors are the only source colors.
 
 ## Features
 
 - Dark and light themes with consistent Tailwind-derived color formulas.
 - Five shade levels for the base surfaces.
 - Seventeen Tailwind accent families.
-- Five editor dimming levels, from balanced to very dim.
+- Five editor-only syntax color intensity levels, from full color to faint color.
 - Optional subtle borders.
 - Generated Umbra-owned theme files instead of `workbench.colorCustomizations` or token customization settings.
 - Pairs nicely with the Symbols icon theme (`miguelsolorio.symbols`).

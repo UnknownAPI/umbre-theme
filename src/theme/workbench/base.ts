@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { mix, transparent, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const baseColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const baseColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   foreground: surfaces.fg,
   disabledForeground: withAlpha(surfaces.muted, 0.55),
   focusBorder: surfaces.isDark ? mix(accent.main, surfaces.muted, 0.38) : accent.main,

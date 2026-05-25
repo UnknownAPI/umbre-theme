@@ -10,7 +10,7 @@ export const welcomeColors = ({ accent, surfaces }: ThemeModel): ColorMap => ({
   "welcomePage.progress.foreground": accent.main,
 });
 
-export const testingColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const testingColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "testing.iconFailed": syntax.invalid,
   "testing.iconErrored": syntax.invalid,
   "testing.iconPassed": syntax.added,
@@ -19,7 +19,7 @@ export const testingColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMa
   "testing.iconSkipped": surfaces.muted,
 });
 
-export const chartColors = ({ surfaces, syntax }: ThemeModel): ColorMap => ({
+export const chartColors = ({ surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "charts.foreground": surfaces.fg,
   "charts.lines": surfaces.line,
   "charts.red": syntax.invalid,

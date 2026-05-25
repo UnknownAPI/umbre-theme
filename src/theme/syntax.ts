@@ -2,12 +2,18 @@ import type { AccentFamily, DimVariant, Mode } from "@/config.ts";
 import type { Surfaces, Syntax } from "@/theme/model-types.ts";
 import { mix, tw, type Shade } from "@/theme/palette.ts";
 
+const syntaxCache = new Map<string, Syntax>();
+
 export const createSyntax = (
   mode: Mode,
   accentFamily: AccentFamily,
   dim: DimVariant,
   surfaces: Surfaces,
 ): Syntax => {
+  const cacheKey = [mode, accentFamily, dim.id, surfaces.fg, surfaces.muted, surfaces.subtle].join(":");
+  const cached = syntaxCache.get(cacheKey);
+  if (cached) return cached;
+
   const neutral = mode === "dark" ? tw("zinc", 400) : tw("zinc", 700);
   const chromaShade: Shade = mode === "dark" ? 400 : 700;
   const vividShade: Shade = mode === "dark" ? 500 : 800;
@@ -16,7 +22,7 @@ export const createSyntax = (
   const tone = (family: AccentFamily, shade: Shade = chromaShade): string =>
     mix(tw(family, shade), neutral, syntaxMix);
 
-  return {
+  const syntax = {
     foreground: surfaces.fg,
     comment: mix(surfaces.subtle, surfaces.muted, 0.62),
     keyword: tone(accentFamily, mode === "dark" ? 500 : 700),
@@ -43,5 +49,8 @@ export const createSyntax = (
     added: tone("green", vividShade),
     modified: tone("amber", vividShade),
     removed: tone("rose", vividShade),
-  };
+  } satisfies Syntax;
+
+  syntaxCache.set(cacheKey, syntax);
+  return syntax;
 };

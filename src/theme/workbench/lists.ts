@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { black, transparent, withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const listColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const listColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "list.activeSelectionBackground": surfaces.selection,
   "list.activeSelectionForeground": surfaces.fg,
   "list.activeSelectionIconForeground": surfaces.fg,

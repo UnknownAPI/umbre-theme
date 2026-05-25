@@ -55,7 +55,7 @@ export const panelColors = ({ accent, surfaces }: ThemeModel): ColorMap => ({
   "panelSectionHeader.foreground": surfaces.muted,
 });
 
-export const titleAndStatusColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const titleAndStatusColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "titleBar.activeBackground": surfaces.chrome0,
   "titleBar.inactiveBackground": surfaces.chrome0,
   "titleBar.activeForeground": surfaces.muted,

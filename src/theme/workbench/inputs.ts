@@ -2,7 +2,7 @@ import type { ThemeModel } from "@/theme/model.ts";
 import { withAlpha } from "@/theme/palette.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const inputColors = ({ accent, surfaces, syntax }: ThemeModel): ColorMap => ({
+export const inputColors = ({ accent, surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "dropdown.background": surfaces.overlay,
   "dropdown.listBackground": surfaces.overlay,
   "dropdown.border": surfaces.lineStrong,

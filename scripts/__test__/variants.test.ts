@@ -87,17 +87,17 @@ describe("Umbra surface recipes", () => {
     expect(contrastRatio(pureBlack.surfaces.raised, pureBlack.surfaces.editor)).toBeGreaterThanOrEqual(1.2);
   });
 
-  test("dimming changes editor syntax without changing workbench surfaces", () => {
+  test("editor color intensity changes syntax without changing workbench colors", () => {
     for (const mode of modes) {
       const shade = mode === "dark" ? shadeVariants[2] : shadeVariants[0];
-      const balanced = createThemeModel({
+      const fullColor = createThemeModel({
         mode,
         shade,
         accentFamily: "amber",
         dim: dimVariants[0],
         borders: borderVariants[0],
       });
-      const veryDim = createThemeModel({
+      const faintColor = createThemeModel({
         mode,
         shade,
         accentFamily: "amber",
@@ -105,9 +105,10 @@ describe("Umbra surface recipes", () => {
         borders: borderVariants[0],
       });
 
-      expect(veryDim.syntax.keyword).not.toBe(balanced.syntax.keyword);
-      expect(veryDim.surfaces).toEqual(balanced.surfaces);
-      expect(veryDim.accent).toEqual(balanced.accent);
+      expect(faintColor.syntax.keyword).not.toBe(fullColor.syntax.keyword);
+      expect(faintColor.surfaces).toEqual(fullColor.surfaces);
+      expect(faintColor.accent).toEqual(fullColor.accent);
+      expect(workbenchColors(faintColor)).toEqual(workbenchColors(fullColor));
     }
   });
 });

@@ -1,7 +1,7 @@
 import type { ThemeModel } from "@/theme/model.ts";
 import type { ColorMap } from "@/theme/types.ts";
 
-export const symbolColors = ({ surfaces, syntax }: ThemeModel): ColorMap => ({
+export const symbolColors = ({ surfaces, uiSyntax: syntax }: ThemeModel): ColorMap => ({
   "symbolIcon.arrayForeground": syntax.constant,
   "symbolIcon.booleanForeground": syntax.constant,
   "symbolIcon.classForeground": syntax.class,
