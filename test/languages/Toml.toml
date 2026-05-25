@@ -1,0 +1,6 @@
+[theme]
+name = "Umbra"
+mode = "dark"
+accent = "amber"
+dimming = 2
+features = ["live-preview", "shade", "accent"]

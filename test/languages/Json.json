@@ -1,0 +1,8 @@
+{
+  "name": "umbra",
+  "mode": "dark",
+  "shade": 3,
+  "accent": "amber",
+  "dimming": 2,
+  "features": ["live-preview", "semantic-tokens", "pure-black"]
+}
