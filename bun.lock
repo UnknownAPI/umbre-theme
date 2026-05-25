@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "umbra-theme",
+      "name": "umbre-theme",
       "dependencies": {
         "change-case": "^5.4.4",
         "culori": "^4.0.2",
