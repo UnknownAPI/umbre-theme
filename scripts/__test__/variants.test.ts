@@ -4,6 +4,10 @@ import { readdir, readFile } from "node:fs/promises";
 import {
   accentFamilies,
   borderVariants,
+  defaultBorders,
+  defaultDarkShade,
+  defaultDimming,
+  defaultLightShade,
   defaultPanels,
   defaultTerminal,
   dimVariants,
@@ -43,6 +47,17 @@ describe("Umbra generated theme inventory", () => {
   test("keeps variants generated on demand instead of contributed to the picker", () => {
     expect(expectedVariantCount).toBe(106250);
     expect(createThemes().flatMap((theme) => theme.contribution)).toHaveLength(2);
+  });
+});
+
+describe("Umbra recommended defaults", () => {
+  test("use balanced levels with quieter borders", () => {
+    expect(defaultDarkShade.level).toBe(3);
+    expect(defaultLightShade.level).toBe(3);
+    expect(defaultDimming.level).toBe(3);
+    expect(defaultPanels.level).toBe(3);
+    expect(defaultTerminal.level).toBe(3);
+    expect(defaultBorders.level).toBe(2);
   });
 });
 

@@ -9,10 +9,11 @@ Umbra exposes only two editor themes: `Umbra Dark` and `Umbra Light`. The config
 - Dark and light themes with consistent Tailwind-derived color formulas.
 - Five shade levels for the base surfaces.
 - Seventeen Tailwind accent families.
-- Five editor-only dimming levels for syntax colors.
-- Five panel contrast levels for sidebars, panels, tabs, and widgets.
-- Five terminal contrast levels.
-- Five border intensity levels, including hidden borders.
+- Five labeled editor-only dimming levels for syntax colors.
+- Five labeled panel contrast levels for sidebars, panels, tabs, and widgets.
+- Five labeled terminal contrast levels.
+- Five labeled border intensity levels, including hidden borders.
+- A recommended defaults reset: level 3 for shade, syntax, panels, and terminal; level 2 borders.
 - Generated Umbra-owned theme files instead of `workbench.colorCustomizations` or token customization settings.
 - Pairs nicely with the Symbols icon theme (`miguelsolorio.symbols`).
 
