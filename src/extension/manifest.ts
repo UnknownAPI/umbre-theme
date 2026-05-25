@@ -33,7 +33,7 @@ type ExtensionManifest = {
 export const createExtensionManifest = (themes: ThemeContribution[]): ExtensionManifest => ({
   name: extension.name,
   displayName: extension.displayName,
-  description: "A quiet Tailwind theme for focused coding.",
+  description: "A quiet, deeply customizable theme for focused coding.",
   version: extension.version,
   publisher: extension.publisher,
   license: "Apache-2.0",

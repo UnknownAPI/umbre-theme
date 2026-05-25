@@ -3,7 +3,7 @@
   "displayName": "Umbra",
   "version": "0.1.0",
   "private": true,
-  "description": "A quiet Tailwind theme for focused coding.",
+  "description": "A quiet, deeply customizable theme for focused coding.",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
