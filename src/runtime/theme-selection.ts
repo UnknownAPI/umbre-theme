@@ -4,11 +4,11 @@ import { readSettings, updateSettings } from "@/runtime/settings.ts";
 import { themeModeFromLabel } from "@/theme/naming.ts";
 import * as vscode from "vscode";
 
-export const applySelectedUmbraTheme = async (): Promise<void> => {
-  if (isApplyingSettings()) return;
+export const applySelectedUmbraTheme = async (): Promise<boolean> => {
+  if (isApplyingSettings()) return false;
 
   const mode = selectedUmbraMode();
-  if (!mode) return;
+  if (!mode) return false;
 
   const current = readSettings();
   const settings = {
@@ -18,6 +18,7 @@ export const applySelectedUmbraTheme = async (): Promise<void> => {
   };
   await updateSettings(settings);
   await applySettings(settings);
+  return true;
 };
 
 export const isThemeSelectionChange = (event: vscode.ConfigurationChangeEvent): boolean => {

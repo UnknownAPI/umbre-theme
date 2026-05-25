@@ -12,9 +12,14 @@ export const activate = (context: vscode.ExtensionContext): void => {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((event) => {
-      if (isThemeSelectionChange(event)) void applySelectedUmbraTheme();
+      if (isThemeSelectionChange(event)) void applyAndConfigureSelectedTheme();
     }),
   );
+};
+
+const applyAndConfigureSelectedTheme = async (): Promise<void> => {
+  const applied = await applySelectedUmbraTheme();
+  if (applied) await vscode.commands.executeCommand("umbra.configure");
 };
 
 export const deactivate = (): void => undefined;
