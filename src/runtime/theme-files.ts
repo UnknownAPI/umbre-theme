@@ -1,6 +1,8 @@
 import type { Mode } from "@/config.ts";
 import type { UmbraSettings } from "@/runtime/settings.ts";
-import { themeFileName, variantFileName } from "@/theme/naming.ts";
+import { createThemeDocumentFromInput } from "@/theme/create-theme.ts";
+import { themeFileName, themeLabel } from "@/theme/naming.ts";
+import { stringifyJson } from "@/utils/json.ts";
 import * as vscode from "vscode";
 
 let extensionUri: vscode.Uri | undefined;
@@ -13,8 +15,7 @@ export const copyVariantToTheme = async (
   settings: UmbraSettings,
   targetMode: Mode = settings.mode,
 ): Promise<void> => {
-  const content = await readVariantFile(settings);
-  await writeThemeFile(targetMode, content);
+  await writeThemeFile(targetMode, encodeTheme(settings));
 };
 
 export const readThemeFile = async (mode: Mode): Promise<Uint8Array> => {
@@ -28,13 +29,16 @@ export const writeThemeFile = async (mode: Mode, content: Uint8Array): Promise<v
   await vscode.workspace.fs.writeFile(uri, content);
 };
 
-const readVariantFile = async (settings: UmbraSettings): Promise<Uint8Array> => {
-  const uri = vscode.Uri.joinPath(
-    themesUri(),
-    "variants",
-    variantFileName(settings.mode, settings.shade, settings.accent, settings.dim, settings.borders),
-  );
-  return vscode.workspace.fs.readFile(uri);
+const encodeTheme = (settings: UmbraSettings): Uint8Array => {
+  const document = createThemeDocumentFromInput(themeLabel(settings.mode), {
+    mode: settings.mode,
+    shade: settings.shade,
+    accent: settings.accent,
+    dim: settings.dim,
+    borders: settings.borders,
+  });
+
+  return Buffer.from(stringifyJson(document));
 };
 
 const themeUri = (mode: Mode): vscode.Uri => {

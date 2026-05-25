@@ -7,7 +7,7 @@ import { transparent, white } from "@/theme/palette.ts";
 import { semanticTokenColors } from "@/theme/semantic.ts";
 import { tokenColors } from "@/theme/tokens/index.ts";
 import { workbenchColors } from "@/theme/workbench/index.ts";
-import { createThemes, createThemeVariants } from "@scripts/build/themes.ts";
+import { createThemes } from "@scripts/build/themes.ts";
 import { wcagContrast } from "culori";
 
 const expectedVariantCount =
@@ -22,8 +22,9 @@ describe("Umbra generated theme inventory", () => {
     expect(themes.every((theme) => theme.contribution._watch)).toBe(true);
   });
 
-  test("pre-renders every configurable variant", () => {
-    expect(createThemeVariants()).toHaveLength(expectedVariantCount);
+  test("keeps variants generated on demand instead of contributed to the picker", () => {
+    expect(expectedVariantCount).toBe(1700);
+    expect(createThemes().flatMap((theme) => theme.contribution)).toHaveLength(2);
   });
 });
 

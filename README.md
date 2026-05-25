@@ -11,7 +11,7 @@ Umbra exposes only two editor themes: `Umbra Dark` and `Umbra Light`. The config
 - Seventeen Tailwind accent families.
 - Five editor dimming levels, from balanced to very dim.
 - Optional subtle borders.
-- Pre-rendered theme variants instead of `workbench.colorCustomizations` or token customization settings.
+- Generated Umbra-owned theme files instead of `workbench.colorCustomizations` or token customization settings.
 - Pairs nicely with the Symbols icon theme (`miguelsolorio.symbols`).
 
 ## Commands
@@ -22,11 +22,10 @@ bun run format      # fixes formatting
 bun run lint        # fixes lint issues
 bun run typecheck   # TypeScript check
 bun run test
-bun run build
-bun run package
-bun run dev:cursor    # build and open an extension-development Cursor window
-bun run dev:code      # build and open an extension-development VS Code window
-bun run package       # create umbra-theme.vsix from the existing dist/
+bun run build          # create dist/
+bun run package        # create umbra-theme.vsix from the existing dist/
+bun run dev:cursor     # build and open an extension-development Cursor window
+bun run dev:code       # build and open an extension-development VS Code window
 bun run install:cursor # install the existing VSIX into Cursor
 bun run install:vscode # install the existing VSIX into VS Code
 ```
@@ -50,4 +49,4 @@ umbra-theme/
 └── dist/                # generated extension output (ignored)
 ```
 
-`dist/` and `umbra-theme.vsix` are generated artifacts and stay ignored. Rebuild them with `bun run build` or `bun run package`. Umbra does not write user/editor settings; configuration is stored in extension global state and applied by swapping generated theme files.
+`dist/` and `umbra-theme.vsix` are generated artifacts and stay ignored. Rebuild them with `bun run build && bun run package`. Umbra does not write user/editor settings; configuration is stored in extension global state and applied by writing Umbra-owned generated theme files.
