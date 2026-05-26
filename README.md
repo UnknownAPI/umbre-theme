@@ -37,6 +37,8 @@ Three polished starting points are built in:
 - **Balanced** — the default Umbre feel.
 - **Pure black** — true black for very dark rooms and OLED displays.
 
+Choosing a preset gives you a stable fixed setup. Turn on **System appearance sync** separately when you want Umbre to follow your OS.
+
 ## What you can tune
 
 Run **Umbre: Configure Theme** and choose exactly what you want:
@@ -51,7 +53,7 @@ Run **Umbre: Configure Theme** and choose exactly what you want:
 - **Terminal contrast** — tune the terminal background separately.
 - **Border intensity** — hide separators or make the workspace structure clearer.
 - **System appearance sync** — follow macOS or Windows light/dark appearance.
-- **Recommended font** — preview and apply JetBrains Mono, Fira Code, or Hack Nerd Font.
+- **Recommended font** — preview and choose JetBrains Mono, Fira Code, or Hack Nerd Font.
 
 Changes preview while you choose. Applying a theme keeps your editor settings clean, except when you explicitly apply a recommended font.
 
@@ -59,7 +61,7 @@ Changes preview while you choose. Applying a theme keeps your editor settings cl
 
 - **Umbre: Configure Theme** — configure presets, mode, shade, accent, syntax, panels, terminal, borders, sync, and fonts.
 - **Umbre: Toggle Opposite Mode** — jump to the matching light/dark opposite of your current setup.
-- **Umbre: Choose Font** — preview and apply a bundled recommended Nerd Font.
+- **Umbre: Choose Font** — preview and choose a recommended coding font.
 
 ## Nice pairing
 

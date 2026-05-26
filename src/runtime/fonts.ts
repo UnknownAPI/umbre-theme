@@ -88,14 +88,13 @@ export const chooseRecommendedFont = async (options: FontOptions = {}): Promise<
   }
 
   await applyFont(picked.value.fontFamily);
-  await vscode.env.clipboard.writeText(picked.value.fontFamily);
-  await vscode.window.showInformationMessage(`${picked.value.label} applied. Font family copied.`);
+  await vscode.window.showInformationMessage(`${picked.value.label} applied.`);
 };
 
 const pickFont = async (snapshot: FontSnapshot, options: FontOptions): Promise<FontPick | undefined> => {
   const picker = vscode.window.createQuickPick<FontPick>();
-  picker.title = `${product.displayName}: choose recommended font`;
-  picker.placeholder = "Preview a bundled Nerd Font, or keep your current font";
+  picker.title = `${product.displayName}: choose font`;
+  picker.placeholder = "Preview a recommended coding font, or keep your current font";
   picker.ignoreFocusOut = true;
   picker.matchOnDescription = true;
   picker.matchOnDetail = true;
@@ -158,8 +157,8 @@ const fontItems = (options: FontOptions): FontPick[] => {
         ...items,
         {
           label: "Skip",
-          description: "Keep existing font settings",
-          detail: "Restore the font you had before opening this picker.",
+          description: "Keep current font",
+          detail: "Leave your editor font unchanged.",
           skip: true,
         },
       ]

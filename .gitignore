@@ -2,6 +2,8 @@
 *.swp
 *.swo
 
+.temp/
+reports/
 node_modules/
 dist/
 *.vsix

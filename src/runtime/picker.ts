@@ -126,7 +126,7 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
       {
         label: "Recommended font",
         description: "JetBrains Mono, Fira Code, or Hack Nerd Font",
-        detail: "Copy a polished font stack and open the font download/settings flow.",
+        detail: "Preview and choose a calm coding font for your editor.",
         value: "font",
       },
     ],
@@ -283,7 +283,7 @@ const pickRecommendedSettings = async (
 ): Promise<UmbreSettings | undefined> => {
   const presets = recommendedPresets.map((preset) => ({
     ...preset,
-    settings: { ...preset.settings, systemAware: current.systemAware },
+    settings: { ...preset.settings, systemAware: false },
   }));
   const selectedPreset = presets.find((preset) => sameSettings(preset.settings, current));
 
