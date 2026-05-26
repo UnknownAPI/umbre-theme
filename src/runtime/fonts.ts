@@ -16,10 +16,15 @@ type RecommendedFont = {
 
 type FontPick = vscode.QuickPickItem & {
   value?: RecommendedFont;
+  skip?: boolean;
 };
 
 type FontOptions = {
   allowSkip?: boolean;
+};
+
+type FontSnapshot = {
+  globalValue: string | undefined;
 };
 
 const fonts = [
@@ -72,24 +77,74 @@ export const initializeRecommendedFonts = (context: vscode.ExtensionContext): vo
 };
 
 export const chooseRecommendedFont = async (options: FontOptions = {}): Promise<void> => {
-  const font = await vscode.window.showQuickPick(fontItems(options), {
-    title: `${product.displayName}: choose recommended font`,
-    placeHolder: "Choose a bundled Nerd Font to install, or keep your current font",
-    matchOnDescription: true,
-    matchOnDetail: true,
-  });
-  if (!font?.value) return;
+  await installAllFonts();
 
-  await installFont(font.value);
-  await vscode.env.clipboard.writeText(font.value.fontFamily);
+  const snapshot = captureFontSnapshot();
+  const picked = await pickFont(snapshot, options);
 
-  const action = await vscode.window.showInformationMessage(
-    `${font.value.label} installed. Font family copied for editor.fontFamily.`,
-    "Open Font Settings",
-  );
-  if (action === "Open Font Settings") {
-    await vscode.commands.executeCommand("workbench.action.openSettings", "editor.fontFamily");
+  if (!picked?.value) {
+    await restoreFontSnapshot(snapshot);
+    return;
   }
+
+  await applyFont(picked.value.fontFamily);
+  await vscode.env.clipboard.writeText(picked.value.fontFamily);
+  await vscode.window.showInformationMessage(`${picked.value.label} applied. Font family copied.`);
+};
+
+const pickFont = async (snapshot: FontSnapshot, options: FontOptions): Promise<FontPick | undefined> => {
+  const picker = vscode.window.createQuickPick<FontPick>();
+  picker.title = `${product.displayName}: choose recommended font`;
+  picker.placeholder = "Preview a bundled Nerd Font, or keep your current font";
+  picker.ignoreFocusOut = true;
+  picker.matchOnDescription = true;
+  picker.matchOnDetail = true;
+  picker.items = fontItems(options);
+  const firstItem = picker.items[0];
+  if (firstItem) picker.activeItems = [firstItem];
+
+  return new Promise((resolve) => {
+    let settled = false;
+    let previewQueue: Promise<unknown> = Promise.resolve();
+
+    const preview = (item: FontPick | undefined): void => {
+      previewQueue = previewQueue.then(() => previewFont(snapshot, item)).catch(showFontError);
+    };
+
+    const done = (value: FontPick | undefined): void => {
+      if (settled) return;
+      settled = true;
+      picker.dispose();
+      resolve(value);
+    };
+
+    picker.onDidChangeActive(([item]) => {
+      preview(item);
+    });
+    picker.onDidAccept(() => {
+      previewQueue.finally(() => {
+        const [item] = picker.activeItems;
+        done(item);
+      });
+    });
+    picker.onDidHide(() => {
+      previewQueue.finally(() => {
+        done(undefined);
+      });
+    });
+
+    picker.show();
+    preview(picker.activeItems[0]);
+  });
+};
+
+const previewFont = async (snapshot: FontSnapshot, item: FontPick | undefined): Promise<void> => {
+  if (item?.value) {
+    await applyFont(item.value.fontFamily);
+    return;
+  }
+
+  await restoreFontSnapshot(snapshot);
 };
 
 const fontItems = (options: FontOptions): FontPick[] => {
@@ -104,10 +159,28 @@ const fontItems = (options: FontOptions): FontPick[] => {
         {
           label: "Skip",
           description: "Keep existing font settings",
-          detail: "Do not install or change anything for fonts.",
+          detail: "Restore the font you had before opening this picker.",
+          skip: true,
         },
       ]
     : items;
+};
+
+const captureFontSnapshot = (): FontSnapshot => {
+  const inspected = vscode.workspace.getConfiguration("editor").inspect<string>("fontFamily");
+  return { globalValue: inspected?.globalValue };
+};
+
+const restoreFontSnapshot = (snapshot: FontSnapshot): Thenable<void> => applyFont(snapshot.globalValue);
+
+const applyFont = (fontFamily: string | undefined): Thenable<void> => {
+  return vscode.workspace
+    .getConfiguration("editor")
+    .update("fontFamily", fontFamily, vscode.ConfigurationTarget.Global);
+};
+
+const installAllFonts = async (): Promise<void> => {
+  await Promise.all(fonts.map((font) => installFont(font)));
 };
 
 const installFont = async (font: RecommendedFont): Promise<void> => {
@@ -131,4 +204,9 @@ const userFontDir = (): string => {
   if (process.platform === "win32")
     return join(process.env.LOCALAPPDATA ?? home, "Microsoft", "Windows", "Fonts");
   return join(home, ".local", "share", "fonts");
+};
+
+const showFontError = async (error: unknown): Promise<void> => {
+  const message = error instanceof Error ? error.message : String(error);
+  await vscode.window.showErrorMessage(`Unable to apply ${product.displayName} font: ${message}`);
 };
