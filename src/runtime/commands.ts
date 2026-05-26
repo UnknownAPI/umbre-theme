@@ -1,10 +1,10 @@
 import { commandIds, product } from "@/product.ts";
+import { setAppearanceSyncSuspended } from "@/runtime/appearance-sync.ts";
 import { applySettings } from "@/runtime/apply.ts";
 import { oppositeSettings } from "@/runtime/opposite-settings.ts";
 import { pickSettings } from "@/runtime/picker.ts";
 import { createThemePreview } from "@/runtime/preview.ts";
 import { readSettings, updateSettings, type UmbreSettings } from "@/runtime/settings.ts";
-import { setSystemAppearanceSyncSuspended } from "@/runtime/system-appearance.ts";
 import { themeModeFromLabel } from "@/theme/naming.ts";
 import * as vscode from "vscode";
 
@@ -21,7 +21,7 @@ const configureTheme = async (): Promise<void> => {
   let picked: UmbreSettings | undefined;
   let previewFinished = false;
 
-  setSystemAppearanceSyncSuspended(true);
+  setAppearanceSyncSuspended(true);
   try {
     preview = await createThemePreview();
     picked = await pickSettings(readSettings(), preview.preview);
@@ -34,7 +34,7 @@ const configureTheme = async (): Promise<void> => {
     await showAppliedMessage(label, activeMode, picked.mode);
   } finally {
     if (preview && !previewFinished) await preview.cancel();
-    setSystemAppearanceSyncSuspended(false);
+    setAppearanceSyncSuspended(false);
   }
 };
 
