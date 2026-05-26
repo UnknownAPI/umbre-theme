@@ -21,6 +21,7 @@ import {
   type TerminalVariant,
 } from "@/config.ts";
 import { product } from "@/product.ts";
+import { chooseRecommendedFont } from "@/runtime/fonts.ts";
 import type { UmbreSettings } from "@/runtime/settings.ts";
 import { detectSystemMode } from "@/runtime/system-mode.ts";
 import { titleCase } from "@/utils/text.ts";
@@ -42,7 +43,8 @@ type ConfigurationTarget =
   | "panels"
   | "terminal"
   | "borders"
-  | "systemAware";
+  | "systemAware"
+  | "font";
 type PreviewSettings = (settings: UmbreSettings) => void;
 
 export const pickSettings = async (
@@ -121,6 +123,12 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
         detail: "Automatically mirror your Umbre setup when the OS switches light or dark.",
         value: "systemAware",
       },
+      {
+        label: "Recommended font",
+        description: "JetBrains Mono, Fira Code, or Hack Nerd Font",
+        detail: "Copy a polished font stack and open the font download/settings flow.",
+        value: "font",
+      },
     ],
     `${product.displayName}: what would you like to configure?`,
   );
@@ -166,6 +174,10 @@ const pickSingleSetting = async (
       return systemAware === undefined
         ? undefined
         : settingsWithSystemAware(current, systemAware, previewSettings);
+    }
+    case "font": {
+      await chooseRecommendedFont();
+      return undefined;
     }
   }
 };

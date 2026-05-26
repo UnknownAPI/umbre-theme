@@ -3,11 +3,13 @@ import { readFile } from "node:fs/promises";
 import { commandContributions, type CommandContribution } from "@/extension/contributions.ts";
 import { commandIds, product } from "@/product.ts";
 import type { ThemeContribution } from "@/theme/types.ts";
-import { copyFile, ensureDir } from "@/utils/fs.ts";
+import { copyDir, copyFile, ensureDir } from "@/utils/fs.ts";
 import { writeJson } from "@/utils/json.ts";
 import {
   distAssetsDir,
   distDir,
+  distFontsPath,
+  fontsPath,
   licensePath,
   logoPath,
   readmePath,
@@ -82,6 +84,7 @@ const createExtensionManifest = (
   activationEvents: [
     `onCommand:${commandIds.configure}`,
     `onCommand:${commandIds.toggleOpposite}`,
+    `onCommand:${commandIds.chooseFont}`,
     "onStartupFinished",
   ],
   extensionPack: [product.recommendedExtensions.symbols.id],
@@ -141,6 +144,7 @@ const writeExtensionArtifacts = async (): Promise<void> => {
     ...themes.map((theme) => writeJson(new URL(theme.fileName, themesDir), theme.document)),
     copyFile(logoPath, new URL("logo.png", distAssetsDir)),
     copyFile(screenshotsPath, new URL("screenshots.png", distAssetsDir)),
+    copyDir(fontsPath, distFontsPath),
     copyFile(readmePath, new URL("README.md", distDir)),
     copyFile(licensePath, new URL("LICENSE", distDir)),
     writeJson(

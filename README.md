@@ -54,6 +54,7 @@ You can change:
 - **Terminal contrast**: tune the terminal background separately.
 - **Borders**: hide separators or make the workspace structure clearer.
 - **System appearance sync**: optionally follow macOS or Windows light/dark changes.
+- **Recommended fonts**: install a bundled JetBrains Mono, Fira Code, or Hack Nerd Font and copy its font stack without changing settings for you.
 
 Changes preview while you choose. When you apply them, Umbre updates its own generated theme files and keeps your editor settings clean.
 
@@ -61,3 +62,4 @@ Changes preview while you choose. When you apply them, Umbre updates its own gen
 
 - **Umbre: Configure Theme**: customize the active Umbre theme.
 - **Umbre: Toggle Opposite Mode**: switch to the calculated light/dark opposite.
+- **Umbre: Choose Font**: install a bundled recommended Nerd Font and copy its font stack.

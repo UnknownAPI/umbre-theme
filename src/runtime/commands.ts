@@ -1,6 +1,7 @@
 import { commandIds, product } from "@/product.ts";
 import { setAppearanceSyncSuspended } from "@/runtime/appearance-sync.ts";
 import { applySettings } from "@/runtime/apply.ts";
+import { chooseRecommendedFont } from "@/runtime/fonts.ts";
 import { oppositeSettings } from "@/runtime/opposite-settings.ts";
 import { pickSettings } from "@/runtime/picker.ts";
 import { createThemePreview } from "@/runtime/preview.ts";
@@ -13,6 +14,7 @@ export const registerCommands = (context: vscode.ExtensionContext): void => {
   context.subscriptions.push(
     vscode.commands.registerCommand(commandIds.configure, configureTheme),
     vscode.commands.registerCommand(commandIds.toggleOpposite, toggleOppositeTheme),
+    vscode.commands.registerCommand(commandIds.chooseFont, chooseRecommendedFont),
   );
 };
 

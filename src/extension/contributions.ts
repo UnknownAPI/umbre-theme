@@ -17,4 +17,9 @@ export const commandContributions = (): CommandContribution[] => [
     title: product.commands.toggleOpposite.title,
     category: product.displayName,
   },
+  {
+    command: product.commands.chooseFont.id,
+    title: product.commands.chooseFont.title,
+    category: product.displayName,
+  },
 ];
