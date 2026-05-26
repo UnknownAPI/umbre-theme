@@ -14,6 +14,14 @@ type RecommendedFont = {
   files: string[];
 };
 
+type FontPick = vscode.QuickPickItem & {
+  value?: RecommendedFont;
+};
+
+type FontOptions = {
+  allowSkip?: boolean;
+};
+
 const fonts = [
   {
     id: "jetbrains-mono",
@@ -63,20 +71,14 @@ export const initializeRecommendedFonts = (context: vscode.ExtensionContext): vo
   extensionUri = context.extensionUri;
 };
 
-export const chooseRecommendedFont = async (): Promise<void> => {
-  const font = await vscode.window.showQuickPick(
-    fonts.map((value) => ({
-      ...value,
-      value,
-    })),
-    {
-      title: `${product.displayName}: choose recommended font`,
-      placeHolder: "Choose a bundled Nerd Font to install",
-      matchOnDescription: true,
-      matchOnDetail: true,
-    },
-  );
-  if (!font) return;
+export const chooseRecommendedFont = async (options: FontOptions = {}): Promise<void> => {
+  const font = await vscode.window.showQuickPick(fontItems(options), {
+    title: `${product.displayName}: choose recommended font`,
+    placeHolder: "Choose a bundled Nerd Font to install, or keep your current font",
+    matchOnDescription: true,
+    matchOnDetail: true,
+  });
+  if (!font?.value) return;
 
   await installFont(font.value);
   await vscode.env.clipboard.writeText(font.value.fontFamily);
@@ -88,6 +90,24 @@ export const chooseRecommendedFont = async (): Promise<void> => {
   if (action === "Open Font Settings") {
     await vscode.commands.executeCommand("workbench.action.openSettings", "editor.fontFamily");
   }
+};
+
+const fontItems = (options: FontOptions): FontPick[] => {
+  const items = fonts.map((value) => ({
+    ...value,
+    value,
+  }));
+
+  return options.allowSkip
+    ? [
+        ...items,
+        {
+          label: "Skip",
+          description: "Keep existing font settings",
+          detail: "Do not install or change anything for fonts.",
+        },
+      ]
+    : items;
 };
 
 const installFont = async (font: RecommendedFont): Promise<void> => {

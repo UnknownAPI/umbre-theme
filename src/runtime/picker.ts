@@ -216,6 +216,8 @@ const pickAllSettings = async (
   if (!borders) return undefined;
   const withBorders = { ...withTerminal, borders };
 
+  await chooseRecommendedFont({ allowSkip: true });
+
   return withBorders;
 };
 
