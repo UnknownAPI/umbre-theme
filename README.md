@@ -18,48 +18,51 @@
 
 ---
 
-Umbre is one calm theme with built-in light, balanced, and dark configurations. You can tune the whole theme from the Command Palette without editing JSON or adding color overrides to your settings.
+Umbre is one calm theme you can shape from the Command Palette.
 
-It also includes three recommended presets:
+No copied JSON. No color overrides. Pick a preset, tune what you want, and Umbre writes its own generated theme files for you.
 
-- **Light**: a bright, soft setup for daytime work.
-- **Balanced**: the default Umbre look.
-- **Pure black**: a minimal true-black setup for very dark environments.
+## Start here
 
-## Install
+1. Install Umbre from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ohkimur.umbre-theme) or [Open VSX](https://open-vsx.org/extension/ohkimur/umbre-theme).
+2. Run **Preferences: Color Theme**.
+3. Choose **Umbre**.
+4. Use the picker that opens, or run **Umbre: Configure Theme** any time.
 
-Umbre is published on:
+## Recommended settings
 
-- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ohkimur.umbre-theme)
-- [Open VSX](https://open-vsx.org/extension/ohkimur/umbre-theme)
+Three polished starting points are built in:
 
-After installing, open **Preferences: Color Theme** and choose **Umbre**. The configuration picker opens when Umbre is selected.
+- **Light** — soft, bright, and easy for daytime work.
+- **Balanced** — the default Umbre feel.
+- **Pure black** — true black for very dark rooms and OLED displays.
 
-Umbre pairs well with [Symbols](https://marketplace.visualstudio.com/items?itemName=miguelsolorio.symbols), a simple file icon theme that works in both VS Code and Cursor. After installation, Umbre can help you install Symbols and open the icon theme picker.
+## What you can tune
 
-## Customize
+Run **Umbre: Configure Theme** and choose exactly what you want:
 
-Run **Umbre: Configure Theme** from the Command Palette.
+- **Configure all** — walk through every option.
+- **Recommended presets** — pick Light, Balanced, or Pure black.
+- **Mode** — switch between dark and light.
+- **Surface shade** — choose a softer or deeper editor background.
+- **Accent color** — change the command, cursor, focus, badge, and active color.
+- **Editor dimming** — make syntax vivid, balanced, soft, muted, or faint.
+- **Panel contrast** — blend or separate sidebars, panels, tabs, and widgets.
+- **Terminal contrast** — tune the terminal background separately.
+- **Border intensity** — hide separators or make the workspace structure clearer.
+- **System appearance sync** — follow macOS or Windows light/dark appearance.
+- **Recommended font** — preview and apply JetBrains Mono, Fira Code, or Hack Nerd Font.
 
-Start with a recommended preset, adjust each part yourself, or run **Umbre: Toggle Opposite Mode** to jump to the matching light/dark opposite of your current setup.
-
-If you enable system appearance sync, Umbre keeps the two sides in parity when macOS or Windows switches light/dark appearance.
-
-You can change:
-
-- **Shade**: choose a softer or deeper editor background.
-- **Accent**: pick the highlight color family.
-- **Syntax strength**: keep code colors vivid, soften them, or make them nearly monochrome.
-- **Panels and sidebars**: control how much the workbench chrome stands apart from the editor.
-- **Terminal contrast**: tune the terminal background separately.
-- **Borders**: hide separators or make the workspace structure clearer.
-- **System appearance sync**: optionally follow macOS or Windows light/dark changes.
-- **Recommended fonts**: install and preview a bundled JetBrains Mono, Fira Code, or Hack Nerd Font. Skipping restores your previous font setting.
-
-Changes preview while you choose. When you apply them, Umbre updates its own generated theme files and keeps editor settings clean, except when you explicitly apply a recommended font.
+Changes preview while you choose. Applying a theme keeps your editor settings clean, except when you explicitly apply a recommended font.
 
 ## Commands
 
-- **Umbre: Configure Theme**: customize the active Umbre theme.
-- **Umbre: Toggle Opposite Mode**: switch to the calculated light/dark opposite.
-- **Umbre: Choose Font**: preview and apply a bundled recommended Nerd Font.
+- **Umbre: Configure Theme** — configure presets, mode, shade, accent, syntax, panels, terminal, borders, sync, and fonts.
+- **Umbre: Toggle Opposite Mode** — jump to the matching light/dark opposite of your current setup.
+- **Umbre: Choose Font** — preview and apply a bundled recommended Nerd Font.
+
+## Nice pairing
+
+Umbre pairs well with [Symbols](https://marketplace.visualstudio.com/items?itemName=miguelsolorio.symbols), a simple file icon theme for VS Code and Cursor.
+
+After installation, Umbre can help install Symbols and open the icon theme picker.

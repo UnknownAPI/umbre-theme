@@ -6,7 +6,7 @@ import type { TokenColor } from "@/theme/types.ts";
 export const codeTokenColors = ({ syntax }: ThemeModel): TokenColor[] => [
   tokenRule("Types", ["entity.name.type"], syntax.type),
   tokenRule("Inherited Class", ["entity.other.inherited-class"], syntax.tag),
-  tokenRule("Library Class or Type", ["support.type", "support.class", "source.go storage.type"], syntax.tag),
+  tokenRule("Library Type", ["support.type", "source.go storage.type"], syntax.tag),
   tokenRule("Classes", ["entity.name.class", "entity.name.struct", "support.class.component"], syntax.class),
   tokenRule("Interfaces", ["entity.name.interface"], syntax.interface),
   tokenRule("Function Name", ["entity.name.function"], syntax.function),

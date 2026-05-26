@@ -4,7 +4,6 @@ import type { SemanticTokenColor } from "@/theme/types.ts";
 export const semanticTokenColors = ({ syntax }: ThemeModel): Record<string, SemanticTokenColor> => ({
   namespace: syntax.foreground,
   class: syntax.class,
-  "class.defaultLibrary": syntax.tag,
   enum: syntax.type,
   "enum.defaultLibrary": syntax.tag,
   interface: syntax.tag,
