@@ -18,7 +18,13 @@
 
 ---
 
-Umbre includes **Umbre Dark** and **Umbre Light**. The defaults are calm and low contrast, but you can tune the theme from the Command Palette without editing JSON or adding color overrides to your settings.
+Umbre includes **Umbre Dark** and **Umbre Light**. It is calm by default, but you can tune the whole theme from the Command Palette without editing JSON or adding color overrides to your settings.
+
+It also includes three recommended presets:
+
+- **Light**: a bright, soft setup for daytime work.
+- **Balanced**: the default Umbre look.
+- **Pure black**: a minimal true-black setup for very dark environments.
 
 ## Install
 
@@ -34,6 +40,8 @@ Umbre pairs well with [Symbols](https://marketplace.visualstudio.com/items?itemN
 ## Customize
 
 Run **Umbre: Configure Theme** from the Command Palette.
+
+Start with a recommended preset, or adjust each part yourself.
 
 You can change:
 

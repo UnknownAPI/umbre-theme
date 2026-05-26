@@ -52,7 +52,7 @@ export const pickSettings = async (
   if (!target) return undefined;
 
   if (target === "all") return pickAllSettings(current, previewSettings);
-  if (target === "recommended") return recommendedSettings(current.mode);
+  if (target === "recommended") return pickRecommendedSettings(current, previewSettings);
   return pickSingleSetting(current, target, previewSettings);
 };
 
@@ -66,9 +66,9 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
         value: "all",
       },
       {
-        label: "Recommended defaults",
-        description: "Reset",
-        detail: "Use level 3 for shade, editor dimming, panels, and terminal; level 2 borders.",
+        label: "Recommended presets",
+        description: "Light, balanced, or pure black",
+        detail: "Choose one of three polished Umbre starting points across the full brightness spectrum.",
         value: "recommended",
       },
       {
@@ -189,15 +189,93 @@ const pickAllSettings = async (
   return { ...withTerminal, borders };
 };
 
-const recommendedSettings = (mode: Mode): UmbreSettings => ({
-  mode,
-  shade: defaultShadeForMode(mode),
-  accent: defaultAccent,
-  dim: defaultDimming,
-  panels: defaultPanels,
-  terminal: defaultTerminal,
-  borders: defaultBorders,
-});
+type RecommendedPreset = {
+  id: "light" | "balanced" | "pure-black";
+  label: string;
+  description: string;
+  detail: string;
+  settings: UmbreSettings;
+};
+
+const recommendedPresets = [
+  {
+    id: "light",
+    label: "Light",
+    description: "Beautiful light setup",
+    detail: "Paper surface with quiet panels, balanced syntax, and soft hairline borders.",
+    settings: {
+      mode: "light",
+      shade: shadeVariants[0],
+      accent: defaultAccent,
+      dim: dimVariants[1],
+      panels: panelVariants[1],
+      terminal: terminalVariants[1],
+      borders: defaultBorders,
+    },
+  },
+  {
+    id: "balanced",
+    label: "Balanced",
+    description: "Default Umbre balance",
+    detail: "Middle shade, soft syntax, balanced panels and terminal, with hairline borders.",
+    settings: {
+      mode: "dark",
+      shade: defaultShadeForMode("dark"),
+      accent: defaultAccent,
+      dim: defaultDimming,
+      panels: defaultPanels,
+      terminal: defaultTerminal,
+      borders: defaultBorders,
+    },
+  },
+  {
+    id: "pure-black",
+    label: "Pure black",
+    description: "Very dark minimal setup",
+    detail: "True black editor with merged panels, merged terminal, balanced syntax, and hidden borders.",
+    settings: {
+      mode: "dark",
+      shade: shadeVariants[4],
+      accent: defaultAccent,
+      dim: dimVariants[1],
+      panels: panelVariants[0],
+      terminal: terminalVariants[0],
+      borders: borderVariants[0],
+    },
+  },
+] satisfies RecommendedPreset[];
+
+const pickRecommendedSettings = async (
+  current: UmbreSettings,
+  previewSettings?: PreviewSettings,
+): Promise<UmbreSettings | undefined> => {
+  const selectedPreset = recommendedPresets.find((preset) => sameSettings(preset.settings, current));
+
+  return pickValue(
+    recommendedPresets.map((preset) => ({
+      label: itemLabel(preset.label, preset.id === selectedPreset?.id),
+      description: preset.description,
+      detail: preset.detail,
+      value: preset.settings,
+      current: preset.id === selectedPreset?.id,
+    })),
+    `${product.displayName}: select recommended preset`,
+    (settings) => settings,
+    previewSettings,
+  );
+};
+
+const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
+  return (
+    left.mode === right.mode &&
+    left.shade.id === right.shade.id &&
+    left.accent === right.accent &&
+    left.dim.id === right.dim.id &&
+    left.panels.id === right.panels.id &&
+    left.terminal.id === right.terminal.id &&
+    left.borders.id === right.borders.id
+  );
+};
 
 const pickMode = async (
   current: UmbreSettings,
