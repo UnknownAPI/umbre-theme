@@ -47,10 +47,12 @@ type StoredUmbreSettings = {
 };
 
 const storageKey = product.settingsStorageKey;
+const systemAwareContextKey = "umbre.systemAware";
 let state: vscode.Memento | undefined;
 
 export const initializeSettings = (context: vscode.ExtensionContext): void => {
   state = context.globalState;
+  void updateSystemAwareContext(readSettings().systemAware);
 };
 
 export const defaultSettings = (mode: Mode = defaultMode): UmbreSettings => ({
@@ -93,6 +95,11 @@ export const updateSettings = async (settings: UmbreSettings): Promise<void> => 
     borders: settings.borders.id,
     systemAware: settings.systemAware,
   } satisfies StoredUmbreSettings);
+  await updateSystemAwareContext(settings.systemAware);
+};
+
+const updateSystemAwareContext = (systemAware: boolean): Thenable<void> => {
+  return vscode.commands.executeCommand("setContext", systemAwareContextKey, systemAware);
 };
 
 const parseMode = (value: unknown): Mode => {

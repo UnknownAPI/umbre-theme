@@ -514,6 +514,7 @@ const pickValue = async <Value>(
       done(undefined);
     });
     picker.show();
+    previewNow(activeItem);
   });
 };
 

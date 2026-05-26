@@ -45,6 +45,12 @@ type ExtensionManifest = ExtensionPackageMetadata & {
   keywords: string[];
   contributes: {
     commands: CommandContribution[];
+    menus: {
+      commandPalette: Array<{
+        command: string;
+        when?: string;
+      }>;
+    };
     themes: ThemeContribution[];
   };
 };
@@ -87,6 +93,14 @@ const createExtensionManifest = (
   keywords: ["theme", "dark theme", "light theme", "black", "umbre"],
   contributes: {
     commands: commandContributions(),
+    menus: {
+      commandPalette: [
+        {
+          command: commandIds.toggleOpposite,
+          when: "!umbre.systemAware",
+        },
+      ],
+    },
     themes,
   },
 });
