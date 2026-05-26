@@ -73,7 +73,11 @@ const createExtensionManifest = (
   type: "module",
   main: "./extension.js",
   icon: "assets/logo.png",
-  activationEvents: [`onCommand:${commandIds.configure}`, "onStartupFinished"],
+  activationEvents: [
+    `onCommand:${commandIds.configure}`,
+    `onCommand:${commandIds.toggleOpposite}`,
+    "onStartupFinished",
+  ],
   extensionPack: [product.recommendedExtensions.symbols.id],
   files: ["extension.js", "assets/**", "themes/**", "README.md", "LICENSE", "package.json"],
   engines: {

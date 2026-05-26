@@ -16,6 +16,7 @@ import {
   shadeVariants,
   terminalVariants,
 } from "@/config.ts";
+import { oppositeSettings } from "@/runtime/opposite-settings.ts";
 import { createThemeModel, type ThemeModel } from "@/theme/model.ts";
 import { transparent, white } from "@/theme/palette.ts";
 import { semanticTokenColors } from "@/theme/semantic.ts";
@@ -58,6 +59,30 @@ describe("Umbre recommended defaults", () => {
     expect(defaultPanels.level).toBe(3);
     expect(defaultTerminal.level).toBe(3);
     expect(defaultBorders.level).toBe(2);
+  });
+});
+
+describe("Umbre opposite settings", () => {
+  test("flip modes and mirror each level-based control", () => {
+    const opposite = oppositeSettings({
+      mode: "dark",
+      shade: shadeVariants[4],
+      accent: "amber",
+      dim: dimVariants[1],
+      panels: panelVariants[0],
+      terminal: terminalVariants[3],
+      borders: borderVariants[2],
+      systemAware: true,
+    });
+
+    expect(opposite.mode).toBe("light");
+    expect(opposite.accent).toBe("amber");
+    expect(opposite.shade.level).toBe(1);
+    expect(opposite.dim.level).toBe(4);
+    expect(opposite.panels.level).toBe(5);
+    expect(opposite.terminal.level).toBe(2);
+    expect(opposite.borders.level).toBe(3);
+    expect(opposite.systemAware).toBe(true);
   });
 });
 

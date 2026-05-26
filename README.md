@@ -41,7 +41,9 @@ Umbre pairs well with [Symbols](https://marketplace.visualstudio.com/items?itemN
 
 Run **Umbre: Configure Theme** from the Command Palette.
 
-Start with a recommended preset, or adjust each part yourself.
+Start with a recommended preset, adjust each part yourself, or run **Umbre: Toggle Opposite Mode** to jump to the matching light/dark opposite of your current setup.
+
+If you enable system appearance sync, Umbre keeps the two sides in parity when macOS or Windows switches light/dark appearance.
 
 You can change:
 
@@ -51,9 +53,11 @@ You can change:
 - **Panels and sidebars**: control how much the workbench chrome stands apart from the editor.
 - **Terminal contrast**: tune the terminal background separately.
 - **Borders**: hide separators or make the workspace structure clearer.
+- **System appearance sync**: optionally follow macOS or Windows light/dark changes.
 
 Changes preview while you choose. When you apply them, Umbre updates its own generated theme files and keeps your editor settings clean.
 
 ## Commands
 
 - **Umbre: Configure Theme**: customize the active Umbre theme.
+- **Umbre: Toggle Opposite Mode**: switch to the calculated light/dark opposite.

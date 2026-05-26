@@ -32,6 +32,7 @@ export type UmbreSettings = {
   panels: PanelVariant;
   terminal: TerminalVariant;
   borders: BorderVariant;
+  systemAware: boolean;
 };
 
 type StoredUmbreSettings = {
@@ -42,6 +43,7 @@ type StoredUmbreSettings = {
   panels?: unknown;
   terminal?: unknown;
   borders?: unknown;
+  systemAware?: unknown;
 };
 
 const storageKey = product.settingsStorageKey;
@@ -59,6 +61,7 @@ export const defaultSettings = (mode: Mode = defaultMode): UmbreSettings => ({
   panels: defaultPanels,
   terminal: defaultTerminal,
   borders: defaultBorders,
+  systemAware: false,
 });
 
 export const hasStoredSettings = (): boolean => state?.get<StoredUmbreSettings>(storageKey) !== undefined;
@@ -75,6 +78,7 @@ export const readSettings = (): UmbreSettings => {
     panels: parsePanels(stored?.panels),
     terminal: parseTerminal(stored?.terminal),
     borders: parseBorders(stored?.borders),
+    systemAware: parseSystemAware(stored?.systemAware),
   };
 };
 
@@ -87,6 +91,7 @@ export const updateSettings = async (settings: UmbreSettings): Promise<void> => 
     panels: settings.panels.id,
     terminal: settings.terminal.id,
     borders: settings.borders.id,
+    systemAware: settings.systemAware,
   } satisfies StoredUmbreSettings);
 };
 
@@ -118,6 +123,8 @@ const parseBorders = (value: unknown): BorderVariant => {
   if (value === "off") return borderVariants[0];
   return borderVariants.find((borders) => borders.id === value) ?? defaultBorders;
 };
+
+const parseSystemAware = (value: unknown): boolean => value === true;
 
 const isOneOf = <Value extends string>(value: unknown, values: readonly Value[]): value is Value => {
   return typeof value === "string" && values.includes(value as Value);

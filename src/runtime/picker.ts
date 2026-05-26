@@ -41,7 +41,8 @@ type ConfigurationTarget =
   | "dimming"
   | "panels"
   | "terminal"
-  | "borders";
+  | "borders"
+  | "systemAware";
 type PreviewSettings = (settings: UmbreSettings) => void;
 
 export const pickSettings = async (
@@ -113,6 +114,12 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
         detail: "Tune outlines between workbench areas.",
         value: "borders",
       },
+      {
+        label: "System appearance sync",
+        description: current.systemAware ? "On" : "Off",
+        detail: "Automatically mirror your Umbre setup when the OS switches light or dark.",
+        value: "systemAware",
+      },
     ],
     `${product.displayName}: what would you like to configure?`,
   );
@@ -152,6 +159,10 @@ const pickSingleSetting = async (
       const borders = await pickBorders(current, previewSettings);
       return borders ? { ...current, borders } : undefined;
     }
+    case "systemAware": {
+      const systemAware = await pickSystemAware(current);
+      return systemAware === undefined ? undefined : { ...current, systemAware };
+    }
   }
 };
 
@@ -185,8 +196,12 @@ const pickAllSettings = async (
 
   const borders = await pickBorders(withTerminal, previewSettings);
   if (!borders) return undefined;
+  const withBorders = { ...withTerminal, borders };
 
-  return { ...withTerminal, borders };
+  const systemAware = await pickSystemAware(withBorders);
+  if (systemAware === undefined) return undefined;
+
+  return { ...withBorders, systemAware };
 };
 
 type RecommendedPreset = {
@@ -194,7 +209,7 @@ type RecommendedPreset = {
   label: string;
   description: string;
   detail: string;
-  settings: UmbreSettings;
+  settings: Omit<UmbreSettings, "systemAware">;
 };
 
 const recommendedPresets = [
@@ -249,10 +264,14 @@ const pickRecommendedSettings = async (
   current: UmbreSettings,
   previewSettings?: PreviewSettings,
 ): Promise<UmbreSettings | undefined> => {
-  const selectedPreset = recommendedPresets.find((preset) => sameSettings(preset.settings, current));
+  const presets = recommendedPresets.map((preset) => ({
+    ...preset,
+    settings: { ...preset.settings, systemAware: current.systemAware },
+  }));
+  const selectedPreset = presets.find((preset) => sameSettings(preset.settings, current));
 
   return pickValue(
-    recommendedPresets.map((preset) => ({
+    presets.map((preset) => ({
       label: itemLabel(preset.label, preset.id === selectedPreset?.id),
       description: preset.description,
       detail: preset.detail,
@@ -273,7 +292,8 @@ const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
     left.dim.id === right.dim.id &&
     left.panels.id === right.panels.id &&
     left.terminal.id === right.terminal.id &&
-    left.borders.id === right.borders.id
+    left.borders.id === right.borders.id &&
+    left.systemAware === right.systemAware
   );
 };
 
@@ -400,6 +420,29 @@ const pickBorders = async (
     `${product.displayName}: select border intensity`,
     (borders) => ({ ...current, borders }),
     previewSettings,
+  );
+};
+
+const pickSystemAware = async (current: UmbreSettings): Promise<boolean | undefined> => {
+  return pickValue(
+    [
+      {
+        label: itemLabel("On", current.systemAware),
+        description: "Follow system appearance",
+        detail:
+          "When macOS or Windows changes light/dark appearance, Umbre applies the matching opposite mode.",
+        value: true,
+        current: current.systemAware,
+      },
+      {
+        label: itemLabel("Off", !current.systemAware),
+        description: "Manual only",
+        detail: "Keep Umbre on the mode you choose until you change it yourself.",
+        value: false,
+        current: !current.systemAware,
+      },
+    ],
+    `${product.displayName}: system appearance sync`,
   );
 };
 

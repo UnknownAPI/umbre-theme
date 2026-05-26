@@ -12,4 +12,9 @@ export const commandContributions = (): CommandContribution[] => [
     title: product.commands.configure.title,
     category: product.displayName,
   },
+  {
+    command: product.commands.toggleOpposite.id,
+    title: product.commands.toggleOpposite.title,
+    category: product.displayName,
+  },
 ];
