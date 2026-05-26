@@ -1,5 +1,4 @@
 import { runCommand } from "@/utils/process.ts";
-import { buildExtension } from "@scripts/build/build-extension.ts";
 import { distDir } from "@scripts/build/paths.ts";
 
 const editors = {
@@ -23,5 +22,5 @@ const parseEditor = (args: string[]): EditorId => {
 
 const editor = parseEditor(process.argv.slice(2));
 
-await buildExtension();
+await runCommand("bun", ["x", "tsdown"]);
 await runCommand(editors[editor], ["--new-window", `--extensionDevelopmentPath=${distDir.pathname}`]);
