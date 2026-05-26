@@ -114,14 +114,14 @@ export const panelVariants = [
     id: "3",
     level: 3,
     label: "Balanced panels",
-    detail: "Moderate panel separation without strong blocks.",
+    detail: "Moderate panel separation without strong blocks; the default Umbre balance.",
     surfaceContrast: 0.82,
   },
   {
     id: "4",
     level: 4,
     label: "Defined panels",
-    detail: "Clearer sidebars and bottom panels; the default Umbre balance.",
+    detail: "Clearer sidebars and bottom panels.",
     surfaceContrast: 1,
   },
   {
@@ -146,7 +146,7 @@ export const terminalVariants = [
     id: "2",
     level: 2,
     label: "Quiet terminal",
-    detail: "A small lift from the editor background.",
+    detail: "A small lift from the editor background; the default Umbre balance.",
     backgroundMix: 0.25,
   },
   {
@@ -219,7 +219,7 @@ export const defaultShade = defaultDarkShade;
 export const defaultAccent = "amber" satisfies AccentFamily;
 export const defaultDimming = dimVariants[2];
 export const defaultPanels = panelVariants[2];
-export const defaultTerminal = terminalVariants[2];
+export const defaultTerminal = terminalVariants[1];
 export const defaultBorders = borderVariants[1];
 export const defaultShadeForMode = (mode: Mode): ShadeVariant => {
   return mode === "dark" ? defaultDarkShade : defaultLightShade;

@@ -20,6 +20,7 @@ let lastSystemMode: Mode | undefined;
 
 export const setAppearanceSyncSuspended = (value: boolean): void => {
   suspended = value;
+  if (!value) lastSystemMode = undefined;
 };
 
 export type AppearanceSyncOptions = {
@@ -59,7 +60,8 @@ const syncActiveUmbreTheme = async (): Promise<void> => {
 };
 
 const syncSystemAppearance = async (): Promise<void> => {
-  if (suspended || syncing || !hasStoredSettings() || !readSettings().systemAware) return;
+  if (suspended || syncing || isApplyingSettings() || !hasStoredSettings() || !readSettings().systemAware)
+    return;
   if (!isActiveUmbreTheme()) return;
 
   const systemMode = await detectSystemMode();

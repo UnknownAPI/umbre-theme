@@ -52,12 +52,12 @@ describe("Umbre generated theme inventory", () => {
 });
 
 describe("Umbre recommended defaults", () => {
-  test("use balanced levels with quieter borders", () => {
+  test("use balanced levels with quiet terminal and quieter borders", () => {
     expect(defaultDarkShade.level).toBe(3);
     expect(defaultLightShade.level).toBe(3);
     expect(defaultDimming.level).toBe(3);
     expect(defaultPanels.level).toBe(3);
-    expect(defaultTerminal.level).toBe(3);
+    expect(defaultTerminal.level).toBe(2);
     expect(defaultBorders.level).toBe(2);
   });
 });
