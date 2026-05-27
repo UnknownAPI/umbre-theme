@@ -1,0 +1,5 @@
+.button {
+  display: inline-flex;
+  gap: 0.5rem;
+  color: var(--accent);
+}

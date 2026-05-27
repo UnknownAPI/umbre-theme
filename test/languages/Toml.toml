@@ -1,6 +1,0 @@
-[theme]
-name = "Umbre"
-mode = "dark"
-accent = "amber"
-dimming = 2
-features = ["live-preview", "shade", "accent"]
