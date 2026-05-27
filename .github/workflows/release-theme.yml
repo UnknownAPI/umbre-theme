@@ -35,7 +35,17 @@ jobs:
       - name: Test
         run: bun run test
 
+      - name: Build package
+        run: bun run build && bun run package
+
+      - name: Check package changes
+        id: package-changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun scripts/release/has-package-changes.ts
+
       - name: Release
+        if: steps.package-changes.outputs.changed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
