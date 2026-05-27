@@ -1,4 +1,5 @@
 import { product } from "@/product.ts";
+import { pickQuickValue } from "@/runtime/quick-pick.ts";
 import * as vscode from "vscode";
 
 const installAction = `Install ${product.recommendedExtensions.symbols.name}`;
@@ -19,7 +20,7 @@ export const suggestSymbolsIconTheme = async (context: vscode.ExtensionContext):
 
 const suggestInstall = async (context: vscode.ExtensionContext): Promise<void> => {
   const symbols = product.recommendedExtensions.symbols;
-  const choice = await vscode.window.showQuickPick(
+  const choice = await pickQuickValue(
     [
       {
         label: installAction,
@@ -37,12 +38,10 @@ const suggestInstall = async (context: vscode.ExtensionContext): Promise<void> =
     {
       title: `${product.displayName}: file icons`,
       placeHolder: `Install ${symbols.name} icon theme?`,
-      matchOnDescription: true,
-      matchOnDetail: true,
     },
   );
 
-  if (choice?.value === "install") {
+  if (choice === "install") {
     await vscode.commands.executeCommand("workbench.extensions.installExtension", symbols.id, {
       justification: {
         reason: `${product.displayName} recommends ${symbols.name} as a matching file icon theme.`,
@@ -53,12 +52,12 @@ const suggestInstall = async (context: vscode.ExtensionContext): Promise<void> =
     return;
   }
 
-  if (choice?.value === "dismiss") await dismissPrompt(context);
+  if (choice === "dismiss") await dismissPrompt(context);
 };
 
 const suggestChooseIconTheme = async (context: vscode.ExtensionContext): Promise<void> => {
   const symbols = product.recommendedExtensions.symbols;
-  const choice = await vscode.window.showQuickPick(
+  const choice = await pickQuickValue(
     [
       {
         label: chooseAction,
@@ -76,18 +75,16 @@ const suggestChooseIconTheme = async (context: vscode.ExtensionContext): Promise
     {
       title: `${product.displayName}: file icons`,
       placeHolder: `Choose ${symbols.name} as your file icon theme?`,
-      matchOnDescription: true,
-      matchOnDetail: true,
     },
   );
 
-  if (choice?.value === "choose") {
+  if (choice === "choose") {
     await dismissPrompt(context);
     await vscode.commands.executeCommand("workbench.action.selectIconTheme");
     return;
   }
 
-  if (choice?.value === "dismiss") await dismissPrompt(context);
+  if (choice === "dismiss") await dismissPrompt(context);
 };
 
 const dismissPrompt = async (context: vscode.ExtensionContext): Promise<void> => {

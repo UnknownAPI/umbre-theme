@@ -32,7 +32,7 @@ export const applySettings = (settings: UmbreSettings = readSettings()): Promise
 };
 
 export const applySettingsIfActive = async (): Promise<void> => {
-  if (!isActiveUmbreTheme()) return;
+  if (!isUmbreThemeConfigured()) return;
 
   const stored = hasStoredSettings();
   const settings = stored ? readSettings() : defaultSettings();
@@ -59,5 +59,3 @@ const applySettingsNow = async (settings: UmbreSettings): Promise<string> => {
 const copySettingsToActiveTheme = async (settings: UmbreSettings): Promise<void> => {
   await copyVariantToTheme(settings);
 };
-
-const isActiveUmbreTheme = (): boolean => isUmbreThemeConfigured();

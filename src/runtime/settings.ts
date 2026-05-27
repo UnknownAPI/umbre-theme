@@ -98,6 +98,19 @@ export const updateSettings = async (settings: UmbreSettings): Promise<void> => 
   await updateSystemAwareContext(settings.systemAware);
 };
 
+export const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
+  return (
+    left.mode === right.mode &&
+    left.shade.id === right.shade.id &&
+    left.accent === right.accent &&
+    left.dim.id === right.dim.id &&
+    left.panels.id === right.panels.id &&
+    left.terminal.id === right.terminal.id &&
+    left.borders.id === right.borders.id &&
+    left.systemAware === right.systemAware
+  );
+};
+
 const updateSystemAwareContext = (systemAware: boolean): Thenable<void> => {
   return vscode.commands.executeCommand("setContext", systemAwareContextKey, systemAware);
 };

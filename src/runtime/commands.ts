@@ -7,6 +7,7 @@ import { suggestSymbolsIconTheme } from "@/runtime/icon-theme-recommendation.ts"
 import { oppositeSettings } from "@/runtime/opposite-settings.ts";
 import { pickSettings } from "@/runtime/picker.ts";
 import { createThemePreview } from "@/runtime/preview.ts";
+import { pickQuickValue } from "@/runtime/quick-pick.ts";
 import { hasStoredSettings, readSettings, updateSettings, type UmbreSettings } from "@/runtime/settings.ts";
 import { detectSystemMode } from "@/runtime/system-mode.ts";
 import * as vscode from "vscode";
@@ -33,26 +34,21 @@ const configureTheme = async (
 ): Promise<void> => {
   if (configuringTheme) return;
   configuringTheme = true;
-  if (!(await ensureActiveUmbreTheme())) {
-    configuringTheme = false;
-    return;
-  }
-  const target = await configurationTarget(options);
-  if (target === "cancel") {
-    configuringTheme = false;
-    return;
-  }
-
-  const wasActiveTheme = isActiveUmbreTheme();
   let preview: Awaited<ReturnType<typeof createThemePreview>> | undefined;
-  let picked: UmbreSettings | undefined;
   let previewFinished = false;
 
-  setAppearanceSyncSuspended(true);
   try {
+    if (!(await ensureActiveUmbreTheme())) return;
+
+    const target = await configurationTarget(options);
+    if (target === "cancel") return;
+
+    const wasActiveTheme = isUmbreThemeConfigured();
+
+    setAppearanceSyncSuspended(true);
     preview = await createThemePreview();
     const current = readSettings();
-    picked = await pickSettings(current, preview.preview, target ?? undefined);
+    const picked = await pickSettings(current, preview.preview, target ?? undefined);
     if (!picked) return;
 
     await preview.finish(picked);
@@ -75,41 +71,39 @@ const configurationTarget = async (
   if (options.target !== "firstRun") return undefined;
   if (hasStoredSettings()) return "cancel";
 
-  const action = await vscode.window.showQuickPick(
-    [
+  return (
+    (await pickQuickValue(
+      [
+        {
+          label: "Use Preset",
+          description: "Light, Balanced, or Pure black",
+          detail: "Choose one of the built-in Umbre presets.",
+          value: "recommended" as const,
+        },
+        {
+          label: "Configure",
+          description: "Guided setup",
+          detail: "Step through all Umbre theme controls.",
+          value: "all" as const,
+        },
+        {
+          label: "Not now",
+          description: "Skip setup",
+          detail: "You can run Umbre: Configure Theme any time.",
+          value: "cancel" as const,
+        },
+      ],
       {
-        label: "Use Preset",
-        description: "Light, Balanced, or Pure black",
-        detail: "Choose one of the built-in Umbre presets.",
-        value: "recommended" as const,
+        title: `${product.displayName}: setup`,
+        placeHolder: "Choose how to set up Umbre",
       },
-      {
-        label: "Configure",
-        description: "Guided setup",
-        detail: "Step through all Umbre theme controls.",
-        value: "all" as const,
-      },
-      {
-        label: "Not now",
-        description: "Skip setup",
-        detail: "You can run Umbre: Configure Theme any time.",
-        value: "cancel" as const,
-      },
-    ],
-    {
-      title: `${product.displayName}: setup`,
-      placeHolder: "Choose how to set up Umbre",
-      matchOnDescription: true,
-      matchOnDetail: true,
-    },
+    )) ?? "cancel"
   );
-
-  return action?.value ?? "cancel";
 };
 
 const toggleOppositeTheme = async (): Promise<void> => {
   if (!(await ensureActiveUmbreTheme())) return;
-  const wasActiveTheme = isActiveUmbreTheme();
+  const wasActiveTheme = isUmbreThemeConfigured();
   const current = readSettings();
 
   if (current.systemAware) {
@@ -120,7 +114,7 @@ const toggleOppositeTheme = async (): Promise<void> => {
     return;
   }
 
-  const action = await vscode.window.showQuickPick(
+  const action = await pickQuickValue(
     [
       {
         label: "Toggle Manually",
@@ -138,13 +132,11 @@ const toggleOppositeTheme = async (): Promise<void> => {
     {
       title: `${product.displayName}: toggle mode`,
       placeHolder: "Choose how Umbre should switch mode",
-      matchOnDescription: true,
-      matchOnDetail: true,
     },
   );
   if (!action) return;
 
-  const settings = action.value === "system" ? await systemAwareSettings(current) : oppositeSettings(current);
+  const settings = action === "system" ? await systemAwareSettings(current) : oppositeSettings(current);
 
   await updateSettings(settings);
   const label = await applySettings(settings);
@@ -172,8 +164,6 @@ const ensureActiveUmbreTheme = async (): Promise<boolean> => {
   await vscode.commands.executeCommand("workbench.action.selectTheme");
   return false;
 };
-
-const isActiveUmbreTheme = (): boolean => isUmbreThemeConfigured();
 
 const showAppliedMessage = async (label: string, wasActiveTheme: boolean): Promise<void> => {
   if (wasActiveTheme) {

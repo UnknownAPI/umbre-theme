@@ -22,7 +22,7 @@ import {
 } from "@/config.ts";
 import { product } from "@/product.ts";
 import { chooseRecommendedFont } from "@/runtime/fonts.ts";
-import type { UmbreSettings } from "@/runtime/settings.ts";
+import { sameSettings, type UmbreSettings } from "@/runtime/settings.ts";
 import { detectSystemMode } from "@/runtime/system-mode.ts";
 import { titleCase } from "@/utils/text.ts";
 import { debounce } from "es-toolkit";
@@ -298,19 +298,6 @@ const pickRecommendedSettings = async (
     `${product.displayName}: select recommended preset`,
     (settings) => settings,
     previewSettings,
-  );
-};
-
-const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
-  return (
-    left.mode === right.mode &&
-    left.shade.id === right.shade.id &&
-    left.accent === right.accent &&
-    left.dim.id === right.dim.id &&
-    left.panels.id === right.panels.id &&
-    left.terminal.id === right.terminal.id &&
-    left.borders.id === right.borders.id &&
-    left.systemAware === right.systemAware
   );
 };
 

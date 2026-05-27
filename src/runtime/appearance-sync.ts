@@ -10,6 +10,7 @@ import {
   defaultSettings,
   hasStoredSettings,
   readSettings,
+  sameSettings,
   updateSettings,
   type UmbreSettings,
 } from "@/runtime/settings.ts";
@@ -39,7 +40,7 @@ export const initializeAppearanceSync = (
   void rememberSystemMode();
   void updateActiveThemeContext();
   void syncActiveUmbreTheme().then(() => {
-    if (isActiveUmbreTheme() && !hasStoredSettings()) void options.onThemeSelected?.();
+    if (isUmbreThemeConfigured() && !hasStoredSettings()) void options.onThemeSelected?.();
   });
 
   const interval = setInterval(() => {
@@ -50,7 +51,7 @@ export const initializeAppearanceSync = (
     vscode.workspace.onDidChangeConfiguration((event) => {
       if (!affectsUmbreThemeConfiguration(event)) return;
       void updateActiveThemeContext();
-      if (!isActiveUmbreTheme()) return;
+      if (!isUmbreThemeConfigured()) return;
 
       void syncActiveUmbreTheme().then(() => {
         if (!hasStoredSettings()) void options.onThemeSelected?.();
@@ -65,14 +66,14 @@ export const initializeAppearanceSync = (
 };
 
 const syncActiveUmbreTheme = async (): Promise<void> => {
-  if (!isActiveUmbreTheme()) return;
+  if (!isUmbreThemeConfigured()) return;
   await syncToMode(activeThemeMode() ?? readSettings().mode);
 };
 
 const syncSystemAppearance = async (): Promise<void> => {
   if (suspended || syncing || isApplyingSettings() || !hasStoredSettings() || !readSettings().systemAware)
     return;
-  if (!isActiveUmbreTheme()) return;
+  if (!isUmbreThemeConfigured()) return;
 
   const systemMode = await detectSystemMode();
   if (!systemMode || suspended) return;
@@ -115,22 +116,7 @@ const rememberSystemMode = async (): Promise<void> => {
 };
 
 const updateActiveThemeContext = (): Thenable<void> => {
-  return vscode.commands.executeCommand("setContext", activeThemeContextKey, isActiveUmbreTheme());
+  return vscode.commands.executeCommand("setContext", activeThemeContextKey, isUmbreThemeConfigured());
 };
-
-const isActiveUmbreTheme = (): boolean => isUmbreThemeConfigured();
 
 const activeThemeMode = (): Mode | undefined => configuredUmbreThemeMode();
-
-const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
-  return (
-    left.mode === right.mode &&
-    left.shade.id === right.shade.id &&
-    left.accent === right.accent &&
-    left.dim.id === right.dim.id &&
-    left.panels.id === right.panels.id &&
-    left.terminal.id === right.terminal.id &&
-    left.borders.id === right.borders.id &&
-    left.systemAware === right.systemAware
-  );
-};
