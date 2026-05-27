@@ -1,3 +1,4 @@
+import { isUmbreThemeConfigured } from "@/runtime/active-theme.ts";
 import {
   defaultSettings,
   hasStoredSettings,
@@ -6,8 +7,8 @@ import {
   type UmbreSettings,
 } from "@/runtime/settings.ts";
 import { copyVariantToTheme, initializeThemeFiles } from "@/runtime/theme-files.ts";
-import { isThemeLabel, themeLabel } from "@/theme/naming.ts";
-import * as vscode from "vscode";
+import { themeLabel } from "@/theme/naming.ts";
+import type * as vscode from "vscode";
 
 let applyingSettings = false;
 let applyGeneration = 0;
@@ -59,7 +60,4 @@ const copySettingsToActiveTheme = async (settings: UmbreSettings): Promise<void>
   await copyVariantToTheme(settings);
 };
 
-const isActiveUmbreTheme = (): boolean => {
-  const activeTheme = vscode.workspace.getConfiguration("workbench").get<string>("colorTheme", "");
-  return isThemeLabel(activeTheme);
-};
+const isActiveUmbreTheme = (): boolean => isUmbreThemeConfigured();

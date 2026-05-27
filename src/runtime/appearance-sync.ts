@@ -1,4 +1,9 @@
 import type { Mode } from "@/config.ts";
+import {
+  affectsUmbreThemeConfiguration,
+  configuredUmbreThemeMode,
+  isUmbreThemeConfigured,
+} from "@/runtime/active-theme.ts";
 import { applySettings, isApplyingSettings } from "@/runtime/apply.ts";
 import { oppositeSettings } from "@/runtime/opposite-settings.ts";
 import {
@@ -9,7 +14,6 @@ import {
   type UmbreSettings,
 } from "@/runtime/settings.ts";
 import { detectSystemMode } from "@/runtime/system-mode.ts";
-import { isThemeLabel, themeModeFromLabel } from "@/theme/naming.ts";
 import * as vscode from "vscode";
 
 const pollIntervalMs = 2000;
@@ -34,7 +38,9 @@ export const initializeAppearanceSync = (
 ): void => {
   void rememberSystemMode();
   void updateActiveThemeContext();
-  void syncActiveUmbreTheme();
+  void syncActiveUmbreTheme().then(() => {
+    if (isActiveUmbreTheme() && !hasStoredSettings()) void options.onThemeSelected?.();
+  });
 
   const interval = setInterval(() => {
     void syncSystemAppearance();
@@ -42,12 +48,13 @@ export const initializeAppearanceSync = (
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((event) => {
-      if (!event.affectsConfiguration("workbench.colorTheme")) return;
+      if (!affectsUmbreThemeConfiguration(event)) return;
       void updateActiveThemeContext();
       if (!isActiveUmbreTheme()) return;
 
-      void syncActiveUmbreTheme();
-      void options.onThemeSelected?.();
+      void syncActiveUmbreTheme().then(() => {
+        if (!hasStoredSettings()) void options.onThemeSelected?.();
+      });
     }),
     {
       dispose: () => {
@@ -82,7 +89,7 @@ const syncToMode = async (mode: Mode): Promise<void> => {
   syncing = true;
   try {
     const settings = nextSettings(mode);
-    await persistIfChanged(settings);
+    if (hasStoredSettings()) await persistIfChanged(settings);
     await applySettings(settings);
   } finally {
     syncing = false;
@@ -111,12 +118,9 @@ const updateActiveThemeContext = (): Thenable<void> => {
   return vscode.commands.executeCommand("setContext", activeThemeContextKey, isActiveUmbreTheme());
 };
 
-const isActiveUmbreTheme = (): boolean => isThemeLabel(activeThemeLabel());
+const isActiveUmbreTheme = (): boolean => isUmbreThemeConfigured();
 
-const activeThemeMode = (): Mode | undefined => themeModeFromLabel(activeThemeLabel());
-
-const activeThemeLabel = (): string =>
-  vscode.workspace.getConfiguration("workbench").get<string>("colorTheme", "");
+const activeThemeMode = (): Mode | undefined => configuredUmbreThemeMode();
 
 const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean => {
   return (

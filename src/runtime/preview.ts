@@ -1,8 +1,8 @@
 import type { Mode } from "@/config.ts";
 import { product } from "@/product.ts";
+import { configuredUmbreThemeMode } from "@/runtime/active-theme.ts";
 import type { UmbreSettings } from "@/runtime/settings.ts";
 import { copyVariantToTheme, readThemeFile, writeThemeFile } from "@/runtime/theme-files.ts";
-import { themeModeFromLabel } from "@/theme/naming.ts";
 import * as vscode from "vscode";
 
 type PreviewSnapshot = {
@@ -39,7 +39,7 @@ export const createThemePreview = async (): Promise<ThemePreview> => {
         if (previewErrorShown) return;
         previewErrorShown = true;
         const message = error instanceof Error ? error.message : String(error);
-        await vscode.window.showErrorMessage(`Unable to preview ${product.displayName} theme: ${message}`);
+        vscode.window.setStatusBarMessage(`Unable to preview ${product.displayName} theme: ${message}`, 7000);
       });
   };
 
@@ -61,9 +61,8 @@ export const createThemePreview = async (): Promise<ThemePreview> => {
 };
 
 const captureSnapshot = async (): Promise<PreviewSnapshot> => {
-  const activeTheme = vscode.workspace.getConfiguration("workbench").get<string>("colorTheme", "");
   const themeFile = await readThemeFile();
-  const activeMode = themeModeFromLabel(activeTheme);
+  const activeMode = configuredUmbreThemeMode();
 
   return {
     ...(activeMode ? { activeMode } : {}),

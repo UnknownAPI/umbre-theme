@@ -88,7 +88,7 @@ export const chooseRecommendedFont = async (options: FontOptions = {}): Promise<
   }
 
   await applyFont(picked.value.fontFamily);
-  await vscode.window.showInformationMessage(`${picked.value.label} applied.`);
+  vscode.window.setStatusBarMessage(`${picked.value.label} applied.`, 5000);
 };
 
 const pickFont = async (snapshot: FontSnapshot, options: FontOptions): Promise<FontPick | undefined> => {
@@ -207,5 +207,5 @@ const userFontDir = (): string => {
 
 const showFontError = async (error: unknown): Promise<void> => {
   const message = error instanceof Error ? error.message : String(error);
-  await vscode.window.showErrorMessage(`Unable to apply ${product.displayName} font: ${message}`);
+  vscode.window.setStatusBarMessage(`Unable to apply ${product.displayName} font: ${message}`, 7000);
 };

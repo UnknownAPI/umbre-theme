@@ -22,14 +22,14 @@ Umbre is one calm theme you can shape from the Command Palette.
 
 No copied JSON. No color overrides. Pick a preset, tune what you want, and Umbre writes its own generated theme files for you.
 
-Umbre commands stay out of your way until the Umbre theme is active.
+Umbre commands are always available from the Command Palette and guide you if the theme is not active yet.
 
 ## Start here
 
 1. Install Umbre from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ohkimur.umbre-theme) or [Open VSX](https://open-vsx.org/extension/ohkimur/umbre-theme).
 2. Run **Preferences: Color Theme**.
 3. Choose **Umbre**.
-4. Use the picker that opens, or run **Umbre: Configure Theme** any time.
+4. Choose a preset or configure the theme yourself from the setup picker.
 
 ## Recommended settings
 
@@ -69,4 +69,4 @@ Changes preview while you choose. Applying a theme keeps your editor settings cl
 
 Umbre pairs well with [Symbols](https://marketplace.visualstudio.com/items?itemName=miguelsolorio.symbols), a simple file icon theme for VS Code and Cursor.
 
-After installation, Umbre can help install Symbols and open the icon theme picker.
+After you finish Umbre setup, Umbre can help install Symbols and open the icon theme picker.

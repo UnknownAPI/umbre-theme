@@ -18,6 +18,7 @@
   "scripts": {
     "preinstall": "npx only-allow@1.2.2 bun",
     "build": "tsdown",
+    "clean": "bun scripts/clean.ts",
     "typecheck": "tsc --noEmit",
     "commit:lint": "commitlint --verbose",
     "dev:code": "bun scripts/dev.ts --code",

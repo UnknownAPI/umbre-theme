@@ -38,7 +38,6 @@ type ExtensionManifest = ExtensionPackageMetadata & {
   main: string;
   icon: string;
   activationEvents: string[];
-  extensionPack: string[];
   files: string[];
   engines: {
     vscode: string;
@@ -87,7 +86,6 @@ const createExtensionManifest = (
     `onCommand:${commandIds.chooseFont}`,
     "onStartupFinished",
   ],
-  extensionPack: [product.recommendedExtensions.symbols.id],
   files: ["extension.js", "assets/**", "themes/**", "README.md", "LICENSE", "package.json"],
   engines: {
     vscode: "^1.100.0",
@@ -100,15 +98,12 @@ const createExtensionManifest = (
       commandPalette: [
         {
           command: commandIds.configure,
-          when: "umbre.active",
         },
         {
           command: commandIds.toggleOpposite,
-          when: "umbre.active && !umbre.systemAware",
         },
         {
           command: commandIds.chooseFont,
-          when: "umbre.active",
         },
       ],
     },

@@ -3,7 +3,6 @@ import { initializeAppearanceSync } from "@/runtime/appearance-sync.ts";
 import { initializeThemeApplication } from "@/runtime/apply.ts";
 import { registerCommands } from "@/runtime/commands.ts";
 import { initializeRecommendedFonts } from "@/runtime/fonts.ts";
-import { suggestSymbolsIconTheme } from "@/runtime/icon-theme-recommendation.ts";
 import { initializeSettings } from "@/runtime/settings.ts";
 import * as vscode from "vscode";
 
@@ -13,9 +12,8 @@ export const activate = (context: vscode.ExtensionContext): void => {
   initializeRecommendedFonts(context);
   registerCommands(context);
   initializeAppearanceSync(context, {
-    onThemeSelected: () => vscode.commands.executeCommand(commandIds.configure, { target: "all" }),
+    onThemeSelected: () => vscode.commands.executeCommand(commandIds.configure, { target: "firstRun" }),
   });
-  suggestSymbolsIconTheme(context);
 };
 
 export const deactivate = (): void => undefined;

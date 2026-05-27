@@ -5,11 +5,7 @@ const installAction = `Install ${product.recommendedExtensions.symbols.name}`;
 const chooseAction = "Choose Icon Theme";
 const dismissAction = "Not now";
 
-export const suggestSymbolsIconTheme = (context: vscode.ExtensionContext): void => {
-  setTimeout(() => void suggestSymbolsIconThemeNow(context), 1500);
-};
-
-const suggestSymbolsIconThemeNow = async (context: vscode.ExtensionContext): Promise<void> => {
+export const suggestSymbolsIconTheme = async (context: vscode.ExtensionContext): Promise<void> => {
   if (context.globalState.get<boolean>(product.recommendedExtensions.symbols.promptStorageKey)) return;
   if (activeIconTheme() === product.recommendedExtensions.symbols.iconThemeId) return;
 
@@ -23,14 +19,30 @@ const suggestSymbolsIconThemeNow = async (context: vscode.ExtensionContext): Pro
 
 const suggestInstall = async (context: vscode.ExtensionContext): Promise<void> => {
   const symbols = product.recommendedExtensions.symbols;
-  const choice = await vscode.window.showInformationMessage(
-    `${product.displayName} pairs well with ${symbols.name}, a simple file icon theme.`,
-    { modal: true },
-    installAction,
-    dismissAction,
+  const choice = await vscode.window.showQuickPick(
+    [
+      {
+        label: installAction,
+        description: "Recommended icon theme",
+        detail: `${product.displayName} pairs well with ${symbols.name}, a simple file icon theme.`,
+        value: "install" as const,
+      },
+      {
+        label: dismissAction,
+        description: "Skip Symbols",
+        detail: "Keep your current file icon theme.",
+        value: "dismiss" as const,
+      },
+    ],
+    {
+      title: `${product.displayName}: file icons`,
+      placeHolder: `Install ${symbols.name} icon theme?`,
+      matchOnDescription: true,
+      matchOnDetail: true,
+    },
   );
 
-  if (choice === installAction) {
+  if (choice?.value === "install") {
     await vscode.commands.executeCommand("workbench.extensions.installExtension", symbols.id, {
       justification: {
         reason: `${product.displayName} recommends ${symbols.name} as a matching file icon theme.`,
@@ -41,25 +53,41 @@ const suggestInstall = async (context: vscode.ExtensionContext): Promise<void> =
     return;
   }
 
-  if (choice === dismissAction) await dismissPrompt(context);
+  if (choice?.value === "dismiss") await dismissPrompt(context);
 };
 
 const suggestChooseIconTheme = async (context: vscode.ExtensionContext): Promise<void> => {
   const symbols = product.recommendedExtensions.symbols;
-  const choice = await vscode.window.showInformationMessage(
-    `${symbols.name} is installed. Choose it as your file icon theme?`,
-    { modal: true },
-    chooseAction,
-    dismissAction,
+  const choice = await vscode.window.showQuickPick(
+    [
+      {
+        label: chooseAction,
+        description: symbols.name,
+        detail: `Open the icon theme picker and choose ${symbols.name}.`,
+        value: "choose" as const,
+      },
+      {
+        label: dismissAction,
+        description: "Keep current icons",
+        detail: "Leave your file icon theme unchanged.",
+        value: "dismiss" as const,
+      },
+    ],
+    {
+      title: `${product.displayName}: file icons`,
+      placeHolder: `Choose ${symbols.name} as your file icon theme?`,
+      matchOnDescription: true,
+      matchOnDetail: true,
+    },
   );
 
-  if (choice === chooseAction) {
+  if (choice?.value === "choose") {
     await dismissPrompt(context);
     await vscode.commands.executeCommand("workbench.action.selectIconTheme");
     return;
   }
 
-  if (choice === dismissAction) await dismissPrompt(context);
+  if (choice?.value === "dismiss") await dismissPrompt(context);
 };
 
 const dismissPrompt = async (context: vscode.ExtensionContext): Promise<void> => {
