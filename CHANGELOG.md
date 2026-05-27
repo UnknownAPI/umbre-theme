@@ -1,3 +1,9 @@
+## 0.3.3 (2026-05-27)
+
+### Bug Fixes
+
+- improve symbols recommendation flow ([e621c35](https://github.com/ohkimur/umbre-theme/commit/e621c35e6802ff0902e20d9031f879aa57d1960d))
+
 ## 0.3.2 (2026-05-27)
 
 ### Bug Fixes
