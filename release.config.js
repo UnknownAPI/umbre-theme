@@ -15,7 +15,7 @@ const releaseOnlyPlugins = isDryRun
       [
         "@semantic-release/git",
         {
-          assets: ["CHANGELOG.md"],
+          assets: ["CHANGELOG.md", "package.json"],
           message: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
         },
       ],
@@ -59,11 +59,16 @@ export default {
       },
     ],
     [
+      "@semantic-release/npm",
+      {
+        npmPublish: false,
+      },
+    ],
+    [
       "@semantic-release/exec",
       {
         ...marketplaceVerification,
-        prepareCmd:
-          "git tag -d v0.0.0 >/dev/null 2>&1 || true; UMBRE_VERSION=${nextRelease.version} bun run build && bun run package",
+        prepareCmd: "git tag -d v0.0.0 >/dev/null 2>&1 || true; bun run build && bun run package",
         publishCmd: "bun scripts/release/publish-marketplaces.ts",
       },
     ],
