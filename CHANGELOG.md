@@ -1,3 +1,9 @@
+## 0.3.2 (2026-05-27)
+
+### Bug Fixes
+
+- restore cursor setup flow ([94b19f1](https://github.com/ohkimur/umbre-theme/commit/94b19f19d16c3232c33459fc7b168825b3c17a67))
+
 ## 0.3.1 (2026-05-27)
 
 ### Bug Fixes
