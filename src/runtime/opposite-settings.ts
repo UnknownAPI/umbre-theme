@@ -18,6 +18,7 @@ export const oppositeSettings = (settings: UmbreSettings): UmbreSettings => {
     terminal: oppositeVariant(settings.terminal, terminalVariants),
     borders: oppositeVariant(settings.borders, borderVariants),
     systemAware: settings.systemAware,
+    syntaxStyle: settings.syntaxStyle,
   };
 };
 

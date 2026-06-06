@@ -50,6 +50,7 @@ Run **Umbre: Configure Theme** and choose exactly what you want:
 - **Mode** — switch between dark and light.
 - **Surface shade** — choose a softer or deeper editor background.
 - **Accent color** — change the command, cursor, focus, badge, and active color.
+- **Syntax color scheme** — choose from Umbre, GitHub, or Classic syntax palettes.
 - **Editor dimming** — make syntax vivid, balanced, soft, muted, or faint.
 - **Panel contrast** — blend or separate sidebars, panels, tabs, and widgets.
 - **Terminal contrast** — tune the terminal background separately.

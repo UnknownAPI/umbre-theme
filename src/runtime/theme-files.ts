@@ -35,6 +35,7 @@ const encodeTheme = (settings: UmbreSettings): Uint8Array => {
     panels: settings.panels,
     terminal: settings.terminal,
     borders: settings.borders,
+    syntaxStyle: settings.syntaxStyle,
   });
 
   return Buffer.from(stringifyJson(document));

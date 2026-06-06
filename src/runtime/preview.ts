@@ -88,4 +88,5 @@ const previewKey = (snapshot: PreviewSnapshot, settings: UmbreSettings): string 
     settings.panels.id,
     settings.terminal.id,
     settings.borders.id,
+    settings.syntaxStyle.id,
   ].join(":");

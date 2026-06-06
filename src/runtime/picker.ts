@@ -6,11 +6,13 @@ import {
   defaultDimming,
   defaultPanels,
   defaultShadeForMode,
+  defaultSyntaxStyle,
   defaultTerminal,
   dimVariants,
   modes,
   panelVariants,
   shadeVariants,
+  syntaxStyles,
   terminalVariants,
   type AccentFamily,
   type BorderVariant,
@@ -18,6 +20,7 @@ import {
   type Mode,
   type PanelVariant,
   type ShadeVariant,
+  type SyntaxStyle,
   type TerminalVariant,
 } from "@/config.ts";
 import { product } from "@/product.ts";
@@ -44,7 +47,8 @@ type ConfigurationTarget =
   | "terminal"
   | "borders"
   | "systemAware"
-  | "font";
+  | "font"
+  | "syntaxStyle";
 type PreviewSettings = (settings: UmbreSettings) => void;
 
 export const pickSettings = async (
@@ -92,6 +96,12 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
         description: titleCase(current.accent),
         detail: "Change command, cursor, focus, badge, and active states.",
         value: "accent",
+      },
+      {
+        label: "Syntax color scheme",
+        description: current.syntaxStyle.label,
+        detail: current.syntaxStyle.detail,
+        value: "syntaxStyle",
       },
       {
         label: "Editor dimming",
@@ -153,6 +163,10 @@ const pickSingleSetting = async (
       const accent = await pickAccent(current, previewSettings);
       return accent ? { ...current, accent } : undefined;
     }
+    case "syntaxStyle": {
+      const syntaxStyle = await pickSyntaxStyle(current, previewSettings);
+      return syntaxStyle ? { ...current, syntaxStyle } : undefined;
+    }
     case "dimming": {
       const dim = await pickDimming(current, previewSettings);
       return dim ? { ...current, dim } : undefined;
@@ -200,9 +214,13 @@ const pickAllSettings = async (
   if (!accent) return undefined;
   const withAccent = { ...withShade, accent };
 
-  const dim = await pickDimming(withAccent, previewSettings);
+  const syntaxStyle = await pickSyntaxStyle(withAccent, previewSettings);
+  if (!syntaxStyle) return undefined;
+  const withSyntaxStyle = { ...withAccent, syntaxStyle };
+
+  const dim = await pickDimming(withSyntaxStyle, previewSettings);
   if (!dim) return undefined;
-  const withDimming = { ...withAccent, dim };
+  const withDimming = { ...withSyntaxStyle, dim };
 
   const panels = await pickPanels(withDimming, previewSettings);
   if (!panels) return undefined;
@@ -243,6 +261,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
+      syntaxStyle: defaultSyntaxStyle,
     },
   },
   {
@@ -258,6 +277,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
+      syntaxStyle: defaultSyntaxStyle,
     },
   },
   {
@@ -273,6 +293,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
+      syntaxStyle: defaultSyntaxStyle,
     },
   },
 ] satisfies RecommendedPreset[];
@@ -351,6 +372,23 @@ const pickAccent = async (
     })),
     `${product.displayName}: select accent`,
     (accent) => ({ ...current, accent }),
+    previewSettings,
+  );
+};
+
+const pickSyntaxStyle = async (
+  current: UmbreSettings,
+  previewSettings?: PreviewSettings,
+): Promise<SyntaxStyle | undefined> => {
+  return pickValue(
+    syntaxStyles.map((style) => ({
+      label: itemLabel(style.label, current.syntaxStyle.id === style.id),
+      description: style.detail,
+      value: style,
+      current: current.syntaxStyle.id === style.id,
+    })),
+    `${product.displayName}: select syntax color scheme`,
+    (syntaxStyle) => ({ ...current, syntaxStyle }),
     previewSettings,
   );
 };

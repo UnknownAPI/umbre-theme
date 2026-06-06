@@ -7,11 +7,13 @@ import {
   defaultMode,
   defaultPanels,
   defaultShadeForMode,
+  defaultSyntaxStyle,
   defaultTerminal,
   dimVariants,
   modes,
   panelVariants,
   shadeVariants,
+  syntaxStyles,
   terminalVariants,
   type AccentFamily,
   type BorderVariant,
@@ -19,6 +21,7 @@ import {
   type Mode,
   type PanelVariant,
   type ShadeVariant,
+  type SyntaxStyle,
   type TerminalVariant,
 } from "@/config.ts";
 import { product } from "@/product.ts";
@@ -33,6 +36,7 @@ export type UmbreSettings = {
   terminal: TerminalVariant;
   borders: BorderVariant;
   systemAware: boolean;
+  syntaxStyle: SyntaxStyle;
 };
 
 type StoredUmbreSettings = {
@@ -44,6 +48,7 @@ type StoredUmbreSettings = {
   terminal?: unknown;
   borders?: unknown;
   systemAware?: unknown;
+  syntaxStyle?: unknown;
 };
 
 const storageKey = product.settingsStorageKey;
@@ -64,6 +69,7 @@ export const defaultSettings = (mode: Mode = defaultMode): UmbreSettings => ({
   terminal: defaultTerminal,
   borders: defaultBorders,
   systemAware: false,
+  syntaxStyle: defaultSyntaxStyle,
 });
 
 export const hasStoredSettings = (): boolean => state?.get<StoredUmbreSettings>(storageKey) !== undefined;
@@ -81,6 +87,7 @@ export const readSettings = (): UmbreSettings => {
     terminal: parseTerminal(stored?.terminal),
     borders: parseBorders(stored?.borders),
     systemAware: parseSystemAware(stored?.systemAware),
+    syntaxStyle: parseSyntaxStyle(stored?.syntaxStyle),
   };
 };
 
@@ -94,6 +101,7 @@ export const updateSettings = async (settings: UmbreSettings): Promise<void> => 
     terminal: settings.terminal.id,
     borders: settings.borders.id,
     systemAware: settings.systemAware,
+    syntaxStyle: settings.syntaxStyle.id,
   } satisfies StoredUmbreSettings);
   await updateSystemAwareContext(settings.systemAware);
 };
@@ -107,7 +115,8 @@ export const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean
     left.panels.id === right.panels.id &&
     left.terminal.id === right.terminal.id &&
     left.borders.id === right.borders.id &&
-    left.systemAware === right.systemAware
+    left.systemAware === right.systemAware &&
+    left.syntaxStyle.id === right.syntaxStyle.id
   );
 };
 
@@ -145,6 +154,10 @@ const parseBorders = (value: unknown): BorderVariant => {
 };
 
 const parseSystemAware = (value: unknown): boolean => value === true;
+
+const parseSyntaxStyle = (value: unknown): SyntaxStyle => {
+  return syntaxStyles.find((style) => style.id === value) ?? defaultSyntaxStyle;
+};
 
 const isOneOf = <Value extends string>(value: unknown, values: readonly Value[]): value is Value => {
   return typeof value === "string" && values.includes(value as Value);

@@ -5,6 +5,7 @@ import type {
   Mode,
   PanelVariant,
   ShadeVariant,
+  SyntaxStyle,
   TerminalVariant,
 } from "@/config.ts";
 import {
@@ -13,6 +14,7 @@ import {
   defaultDimming,
   defaultPanels,
   defaultShadeForMode,
+  defaultSyntaxStyle,
   defaultTerminal,
 } from "@/config.ts";
 import { createThemeModel } from "@/theme/model.ts";
@@ -30,6 +32,7 @@ export type ThemeDocumentInput = {
   panels: PanelVariant;
   terminal: TerminalVariant;
   borders: BorderVariant;
+  syntaxStyle: SyntaxStyle;
 };
 
 export const createTheme = (mode: Mode): BuiltTheme => {
@@ -43,6 +46,7 @@ export const createTheme = (mode: Mode): BuiltTheme => {
     panels: defaultPanels,
     terminal: defaultTerminal,
     borders: defaultBorders,
+    syntaxStyle: defaultSyntaxStyle,
   });
 
   return {
@@ -67,6 +71,7 @@ export const createThemeDocumentFromInput = (name: string, input: ThemeDocumentI
     panels: input.panels,
     terminal: input.terminal,
     borders: input.borders,
+    syntaxStyle: input.syntaxStyle,
   });
 
   return createThemeDocument(name, model);
