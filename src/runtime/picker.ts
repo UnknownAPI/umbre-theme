@@ -6,13 +6,13 @@ import {
   defaultDimming,
   defaultPanels,
   defaultShadeForMode,
-  defaultSyntaxStyle,
+  defaultSyntax,
   defaultTerminal,
   dimVariants,
   modes,
   panelVariants,
   shadeVariants,
-  syntaxStyles,
+  syntaxVariants,
   terminalVariants,
   type AccentFamily,
   type BorderVariant,
@@ -20,7 +20,7 @@ import {
   type Mode,
   type PanelVariant,
   type ShadeVariant,
-  type SyntaxStyle,
+  type SyntaxVariant,
   type TerminalVariant,
 } from "@/config.ts";
 import { product } from "@/product.ts";
@@ -48,7 +48,7 @@ type ConfigurationTarget =
   | "borders"
   | "systemAware"
   | "font"
-  | "syntaxStyle";
+  | "syntaxVariant";
 type PreviewSettings = (settings: UmbreSettings) => void;
 
 export const pickSettings = async (
@@ -99,9 +99,9 @@ const pickConfigurationTarget = async (current: UmbreSettings): Promise<Configur
       },
       {
         label: "Syntax color scheme",
-        description: current.syntaxStyle.label,
-        detail: current.syntaxStyle.detail,
-        value: "syntaxStyle",
+        description: current.syntaxVariant.label,
+        detail: current.syntaxVariant.detail,
+        value: "syntaxVariant",
       },
       {
         label: "Editor dimming",
@@ -163,9 +163,9 @@ const pickSingleSetting = async (
       const accent = await pickAccent(current, previewSettings);
       return accent ? { ...current, accent } : undefined;
     }
-    case "syntaxStyle": {
-      const syntaxStyle = await pickSyntaxStyle(current, previewSettings);
-      return syntaxStyle ? { ...current, syntaxStyle } : undefined;
+    case "syntaxVariant": {
+      const syntaxVariant = await pickSyntaxVariant(current, previewSettings);
+      return syntaxVariant ? { ...current, syntaxVariant } : undefined;
     }
     case "dimming": {
       const dim = await pickDimming(current, previewSettings);
@@ -214,13 +214,13 @@ const pickAllSettings = async (
   if (!accent) return undefined;
   const withAccent = { ...withShade, accent };
 
-  const syntaxStyle = await pickSyntaxStyle(withAccent, previewSettings);
-  if (!syntaxStyle) return undefined;
-  const withSyntaxStyle = { ...withAccent, syntaxStyle };
+  const syntaxVariant = await pickSyntaxVariant(withAccent, previewSettings);
+  if (!syntaxVariant) return undefined;
+  const withSyntaxVariant = { ...withAccent, syntaxVariant };
 
-  const dim = await pickDimming(withSyntaxStyle, previewSettings);
+  const dim = await pickDimming(withSyntaxVariant, previewSettings);
   if (!dim) return undefined;
-  const withDimming = { ...withSyntaxStyle, dim };
+  const withDimming = { ...withSyntaxVariant, dim };
 
   const panels = await pickPanels(withDimming, previewSettings);
   if (!panels) return undefined;
@@ -261,7 +261,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     },
   },
   {
@@ -277,7 +277,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     },
   },
   {
@@ -293,7 +293,7 @@ const recommendedPresets = [
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: defaultBorders,
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     },
   },
 ] satisfies RecommendedPreset[];
@@ -376,19 +376,19 @@ const pickAccent = async (
   );
 };
 
-const pickSyntaxStyle = async (
+const pickSyntaxVariant = async (
   current: UmbreSettings,
   previewSettings?: PreviewSettings,
-): Promise<SyntaxStyle | undefined> => {
+): Promise<SyntaxVariant | undefined> => {
   return pickValue(
-    syntaxStyles.map((style) => ({
-      label: itemLabel(style.label, current.syntaxStyle.id === style.id),
-      description: style.detail,
-      value: style,
-      current: current.syntaxStyle.id === style.id,
+    syntaxVariants.map((variant) => ({
+      label: itemLabel(variant.label, current.syntaxVariant.id === variant.id),
+      description: variant.detail,
+      value: variant,
+      current: current.syntaxVariant.id === variant.id,
     })),
     `${product.displayName}: select syntax color scheme`,
-    (syntaxStyle) => ({ ...current, syntaxStyle }),
+    (syntaxVariant) => ({ ...current, syntaxVariant }),
     previewSettings,
   );
 };

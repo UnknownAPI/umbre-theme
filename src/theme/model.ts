@@ -6,7 +6,7 @@ import {
   type Mode,
   type PanelVariant,
   type ShadeVariant,
-  type SyntaxStyle,
+  type SyntaxVariant,
   type TerminalVariant,
 } from "@/config.ts";
 import { createAccent } from "@/theme/accent.ts";
@@ -24,7 +24,7 @@ export type ThemeModelInput = {
   panels: PanelVariant;
   terminal: TerminalVariant;
   borders: BorderVariant;
-  syntaxStyle: SyntaxStyle;
+  syntaxVariant: SyntaxVariant;
 };
 
 export const createThemeModel = ({
@@ -35,10 +35,10 @@ export const createThemeModel = ({
   panels,
   terminal,
   borders,
-  syntaxStyle,
+  syntaxVariant,
 }: ThemeModelInput): ThemeModel => {
   const surfaces = createSurfaces(mode, shade, panels);
-  const syntax = createSyntax(mode, accentFamily, dim, surfaces, syntaxStyle);
+  const syntax = createSyntax(mode, accentFamily, dim, surfaces, syntaxVariant);
 
   return {
     mode,
@@ -48,11 +48,11 @@ export const createThemeModel = ({
     panels,
     terminal,
     borders,
-    syntaxStyle,
+    syntaxVariant,
     accent: createAccent(mode, accentFamily),
     surfaces,
     syntax,
     uiSyntax:
-      dim.id === defaultDimming.id ? syntax : createSyntax(mode, accentFamily, defaultDimming, surfaces, syntaxStyle),
+      dim.id === defaultDimming.id ? syntax : createSyntax(mode, accentFamily, defaultDimming, surfaces, syntaxVariant),
   };
 };

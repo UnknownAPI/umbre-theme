@@ -1,4 +1,4 @@
-import type { AccentFamily, DimVariant, Mode, SyntaxStyle } from "@/config.ts";
+import type { AccentFamily, DimVariant, Mode, SyntaxVariant } from "@/config.ts";
 import type { Surfaces, Syntax } from "@/theme/model-types.ts";
 import { mix, tw, type Shade } from "@/theme/palette.ts";
 
@@ -9,9 +9,9 @@ export const createSyntax = (
   accentFamily: AccentFamily,
   dim: DimVariant,
   surfaces: Surfaces,
-  syntaxStyle: SyntaxStyle,
+  syntaxVariant: SyntaxVariant,
 ): Syntax => {
-  const cacheKey = [mode, accentFamily, dim.id, surfaces.fg, surfaces.muted, surfaces.subtle, syntaxStyle.id].join(":");
+  const cacheKey = [mode, accentFamily, dim.id, surfaces.fg, surfaces.muted, surfaces.subtle, syntaxVariant.id].join(":");
   const cached = syntaxCache.get(cacheKey);
   if (cached) return cached;
 
@@ -25,7 +25,7 @@ export const createSyntax = (
     mix(tw(family, shade), neutral, syntaxMix);
 
   const getSyntaxColors = (): Omit<Syntax, "foreground" | "comment"> => {
-    if (syntaxStyle.id === "github") {
+    if (syntaxVariant.id === "flare") {
       // Red-focused keywords, blue strings, purple functions, orange types, green tags
       return {
         keyword: tone("red"),
@@ -55,8 +55,8 @@ export const createSyntax = (
       };
     }
 
-    if (syntaxStyle.id === "classic") {
-      // VS Code Classic: Blue keywords, orange strings, yellow functions, teal types/classes
+    if (syntaxVariant.id === "frost") {
+      // Cool-toned: Blue keywords, orange strings, yellow functions, teal types/classes
       return {
         keyword: tone("blue"),
         storage: tone("blue", vividShade),
@@ -85,7 +85,7 @@ export const createSyntax = (
       };
     }
 
-    // Default: umbre
+    // Default: ember
     return {
       keyword: tone("orange"),
       storage: tone("orange", vividShade),

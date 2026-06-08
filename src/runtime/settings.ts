@@ -7,13 +7,13 @@ import {
   defaultMode,
   defaultPanels,
   defaultShadeForMode,
-  defaultSyntaxStyle,
+  defaultSyntax,
   defaultTerminal,
   dimVariants,
   modes,
   panelVariants,
   shadeVariants,
-  syntaxStyles,
+  syntaxVariants,
   terminalVariants,
   type AccentFamily,
   type BorderVariant,
@@ -21,7 +21,7 @@ import {
   type Mode,
   type PanelVariant,
   type ShadeVariant,
-  type SyntaxStyle,
+  type SyntaxVariant,
   type TerminalVariant,
 } from "@/config.ts";
 import { product } from "@/product.ts";
@@ -36,7 +36,7 @@ export type UmbreSettings = {
   terminal: TerminalVariant;
   borders: BorderVariant;
   systemAware: boolean;
-  syntaxStyle: SyntaxStyle;
+  syntaxVariant: SyntaxVariant;
 };
 
 type StoredUmbreSettings = {
@@ -48,7 +48,7 @@ type StoredUmbreSettings = {
   terminal?: unknown;
   borders?: unknown;
   systemAware?: unknown;
-  syntaxStyle?: unknown;
+  syntaxVariant?: unknown;
 };
 
 const storageKey = product.settingsStorageKey;
@@ -69,7 +69,7 @@ export const defaultSettings = (mode: Mode = defaultMode): UmbreSettings => ({
   terminal: defaultTerminal,
   borders: defaultBorders,
   systemAware: false,
-  syntaxStyle: defaultSyntaxStyle,
+  syntaxVariant: defaultSyntax,
 });
 
 export const hasStoredSettings = (): boolean => state?.get<StoredUmbreSettings>(storageKey) !== undefined;
@@ -87,7 +87,7 @@ export const readSettings = (): UmbreSettings => {
     terminal: parseTerminal(stored?.terminal),
     borders: parseBorders(stored?.borders),
     systemAware: parseSystemAware(stored?.systemAware),
-    syntaxStyle: parseSyntaxStyle(stored?.syntaxStyle),
+    syntaxVariant: parseSyntaxVariant(stored?.syntaxVariant),
   };
 };
 
@@ -101,7 +101,7 @@ export const updateSettings = async (settings: UmbreSettings): Promise<void> => 
     terminal: settings.terminal.id,
     borders: settings.borders.id,
     systemAware: settings.systemAware,
-    syntaxStyle: settings.syntaxStyle.id,
+    syntaxVariant: settings.syntaxVariant.id,
   } satisfies StoredUmbreSettings);
   await updateSystemAwareContext(settings.systemAware);
 };
@@ -116,7 +116,7 @@ export const sameSettings = (left: UmbreSettings, right: UmbreSettings): boolean
     left.terminal.id === right.terminal.id &&
     left.borders.id === right.borders.id &&
     left.systemAware === right.systemAware &&
-    left.syntaxStyle.id === right.syntaxStyle.id
+    left.syntaxVariant.id === right.syntaxVariant.id
   );
 };
 
@@ -155,8 +155,8 @@ const parseBorders = (value: unknown): BorderVariant => {
 
 const parseSystemAware = (value: unknown): boolean => value === true;
 
-const parseSyntaxStyle = (value: unknown): SyntaxStyle => {
-  return syntaxStyles.find((style) => style.id === value) ?? defaultSyntaxStyle;
+const parseSyntaxVariant = (value: unknown): SyntaxVariant => {
+  return syntaxVariants.find((style) => style.id === value) ?? defaultSyntax;
 };
 
 const isOneOf = <Value extends string>(value: unknown, values: readonly Value[]): value is Value => {

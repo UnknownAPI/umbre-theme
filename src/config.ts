@@ -212,24 +212,24 @@ export const borderVariants = [
 ] as const;
 export type BorderVariant = (typeof borderVariants)[number];
 
-export const syntaxStyles = [
+export const syntaxVariants = [
   {
-    id: "umbre",
-    label: "Umbre",
-    detail: "The default, warm-toned warm/cool balanced palette.",
+    id: "ember",
+    label: "Ember",
+    detail: "Warm-toned — the default Umbre palette.",
   },
   {
-    id: "github",
-    label: "GitHub",
-    detail: "Red-focused keywords, blue strings, purple functions, inspired by GitHub's style.",
+    id: "flare",
+    label: "Flare",
+    detail: "Red keywords, blue strings, bold token contrast.",
   },
   {
-    id: "classic",
-    label: "Classic",
-    detail: "Inspired by VS Code classic Dark+/Light+, with blue keywords, green/teal types, and yellow functions.",
+    id: "frost",
+    label: "Frost",
+    detail: "Cool-toned, blue keywords and teal types.",
   },
 ] as const;
-export type SyntaxStyle = (typeof syntaxStyles)[number];
+export type SyntaxVariant = (typeof syntaxVariants)[number];
 
 export const defaultMode = "dark" satisfies Mode;
 export const defaultDarkShade = shadeVariants[2];
@@ -240,7 +240,7 @@ export const defaultDimming = dimVariants[2];
 export const defaultPanels = panelVariants[2];
 export const defaultTerminal = terminalVariants[1];
 export const defaultBorders = borderVariants[1];
-export const defaultSyntaxStyle = syntaxStyles[0];
+export const defaultSyntax = syntaxVariants[0];
 export const defaultShadeForMode = (mode: Mode): ShadeVariant => {
   return mode === "dark" ? defaultDarkShade : defaultLightShade;
 };

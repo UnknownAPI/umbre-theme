@@ -9,13 +9,13 @@ import {
   defaultDimming,
   defaultLightShade,
   defaultPanels,
-  defaultSyntaxStyle,
+  defaultSyntax,
   defaultTerminal,
   dimVariants,
   modes,
   panelVariants,
   shadeVariants,
-  syntaxStyles,
+  syntaxVariants,
   terminalVariants,
 } from "@/config.ts";
 import { oppositeSettings } from "@/runtime/opposite-settings.ts";
@@ -75,7 +75,7 @@ describe("Umbre opposite settings", () => {
       terminal: terminalVariants[3],
       borders: borderVariants[2],
       systemAware: true,
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     });
 
     expect(opposite.mode).toBe("light");
@@ -86,7 +86,7 @@ describe("Umbre opposite settings", () => {
     expect(opposite.terminal.level).toBe(2);
     expect(opposite.borders.level).toBe(3);
     expect(opposite.systemAware).toBe(true);
-    expect(opposite.syntaxStyle).toBe(defaultSyntaxStyle);
+    expect(opposite.syntaxVariant).toBe(defaultSyntax);
   });
 });
 
@@ -104,7 +104,7 @@ describe("Umbre surface recipes", () => {
           panels: defaultPanels,
           terminal: defaultTerminal,
           borders: borderVariants[2],
-          syntaxStyle: defaultSyntaxStyle,
+          syntaxVariant: defaultSyntax,
         });
         const contrastFromPaper = contrastRatio(model.surfaces.editor, white());
 
@@ -127,7 +127,7 @@ describe("Umbre surface recipes", () => {
         panels: defaultPanels,
         terminal: defaultTerminal,
         borders: borderVariants[2],
-        syntaxStyle: defaultSyntaxStyle,
+        syntaxVariant: defaultSyntax,
       });
       return contrastRatio(model.surfaces.editor, white());
     });
@@ -151,7 +151,7 @@ describe("Umbre surface recipes", () => {
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     });
 
     expect(contrastRatio(pureBlack.surfaces.raised, pureBlack.surfaces.overlay)).toBeGreaterThanOrEqual(1.08);
@@ -169,7 +169,7 @@ describe("Umbre surface recipes", () => {
         panels: defaultPanels,
         terminal: defaultTerminal,
         borders: borderVariants[2],
-        syntaxStyle: defaultSyntaxStyle,
+        syntaxVariant: defaultSyntax,
       });
       const faintColor = createThemeModel({
         mode,
@@ -179,7 +179,7 @@ describe("Umbre surface recipes", () => {
         panels: defaultPanels,
         terminal: defaultTerminal,
         borders: borderVariants[2],
-        syntaxStyle: defaultSyntaxStyle,
+        syntaxVariant: defaultSyntax,
       });
 
       expect(faintColor.syntax.keyword).not.toBe(fullColor.syntax.keyword);
@@ -199,7 +199,7 @@ describe("Umbre surface recipes", () => {
       panels: panelVariants[0],
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     });
     const highContrast = createThemeModel({
       mode: "dark",
@@ -209,7 +209,7 @@ describe("Umbre surface recipes", () => {
       panels: panelVariants[4],
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     });
 
     expect(highContrast.surfaces.editor).toBe(lowContrast.surfaces.editor);
@@ -226,7 +226,7 @@ describe("Umbre surface recipes", () => {
         panels: defaultPanels,
         terminal: terminalVariants[0],
         borders: borderVariants[2],
-        syntaxStyle: defaultSyntaxStyle,
+        syntaxVariant: defaultSyntax,
       });
       const strongTerminal = createThemeModel({
         mode,
@@ -236,7 +236,7 @@ describe("Umbre surface recipes", () => {
         panels: defaultPanels,
         terminal: terminalVariants[4],
         borders: borderVariants[2],
-        syntaxStyle: defaultSyntaxStyle,
+        syntaxVariant: defaultSyntax,
       });
 
       expect(quietTerminal.surfaces).toEqual(strongTerminal.surfaces);
@@ -259,7 +259,7 @@ describe("Umbre surface recipes", () => {
           panels: defaultPanels,
           terminal,
           borders: borderVariants[2],
-          syntaxStyle: defaultSyntaxStyle,
+          syntaxVariant: defaultSyntax,
         });
         const colors = workbenchColors(model);
         const terminalBackground = colors["terminal.background"];
@@ -293,7 +293,7 @@ describe("Umbre variant colors", () => {
                 panels: defaultPanels,
                 terminal: defaultTerminal,
                 borders,
-                syntaxStyle: defaultSyntaxStyle,
+                syntaxVariant: defaultSyntax,
               });
               const colors = workbenchColors(model);
               const tokens = tokenColors(model);
@@ -320,7 +320,7 @@ describe("Umbre variant colors", () => {
 });
 
 describe("Umbre syntax styles", () => {
-  test("generates different syntax colors for github and classic styles", () => {
+  test("generates different syntax colors for flare and frost styles", () => {
     const umbreModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
@@ -329,11 +329,11 @@ describe("Umbre syntax styles", () => {
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: defaultSyntaxStyle,
+      syntaxVariant: defaultSyntax,
     });
 
-    const githubStyle = syntaxStyles.find((style) => style.id === "github")!;
-    const githubModel = createThemeModel({
+    const flareVariant = syntaxVariants.find((style) => style.id === "flare")!;
+    const flareModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
       accentFamily: "amber",
@@ -341,11 +341,11 @@ describe("Umbre syntax styles", () => {
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: githubStyle,
+      syntaxVariant: flareVariant,
     });
 
-    const classicStyle = syntaxStyles.find((style) => style.id === "classic")!;
-    const classicModel = createThemeModel({
+    const frostVariant = syntaxVariants.find((style) => style.id === "frost")!;
+    const frostModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
       accentFamily: "amber",
@@ -353,12 +353,12 @@ describe("Umbre syntax styles", () => {
       panels: defaultPanels,
       terminal: defaultTerminal,
       borders: borderVariants[2],
-      syntaxStyle: classicStyle,
+      syntaxVariant: frostVariant,
     });
 
-    expect(githubModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
-    expect(classicModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
-    expect(classicModel.syntax.keyword).not.toBe(githubModel.syntax.keyword);
+    expect(flareModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
+    expect(frostModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
+    expect(frostModel.syntax.keyword).not.toBe(flareModel.syntax.keyword);
   });
 });
 
