@@ -1,4 +1,5 @@
 import {
+  DEFAULT_OPTION_BADGE,
   accentFamilies,
   borderVariants,
   defaultAccent,
@@ -248,8 +249,6 @@ type RecommendedPreset = {
   settings: Omit<UmbreSettings, "systemAware">;
 };
 
-const defaultOptionBadge = "[default option]";
-
 const recommendedPresets = [
   {
     id: "light",
@@ -271,7 +270,7 @@ const recommendedPresets = [
     id: "balanced",
     label: "Balanced",
     description: "Balanced setup",
-    detail: `Middle shade with balanced syntax, panels, terminal, and soft hairline borders. ${defaultOptionBadge}`,
+    detail: `Middle shade with balanced syntax, panels, terminal, and soft hairline borders. ${DEFAULT_OPTION_BADGE}`,
     settings: {
       mode: "dark",
       shade: defaultShadeForMode("dark"),
@@ -333,7 +332,7 @@ const pickMode = async (
     modes.map((mode) => ({
       label: itemLabel(titleCase(mode), current.mode === mode),
       description: `${titleCase(mode)} mode`,
-      ...(mode === defaultMode ? { detail: defaultOptionBadge } : {}),
+      ...(mode === defaultMode ? { detail: DEFAULT_OPTION_BADGE } : {}),
       value: mode,
       current: current.mode === mode,
     })),
@@ -371,7 +370,7 @@ const pickAccent = async (
     accentFamilies.map((accent) => ({
       label: itemLabel(titleCase(accent), current.accent === accent),
       description: "Accent color",
-      ...(accent === defaultAccent ? { detail: defaultOptionBadge } : {}),
+      ...(accent === defaultAccent ? { detail: DEFAULT_OPTION_BADGE } : {}),
       value: accent,
       current: current.accent === accent,
     })),
@@ -578,7 +577,7 @@ const shadeLabel = (mode: Mode, shade: ShadeVariant): string => {
 
 const shadeDetail = (mode: Mode, shade: ShadeVariant): string => {
   const slider = levelSlider(shade.level);
-  return shade.id === defaultShadeForMode(mode).id ? `${slider}  ${defaultOptionBadge}` : slider;
+  return shade.id === defaultShadeForMode(mode).id ? `${slider}  ${DEFAULT_OPTION_BADGE}` : slider;
 };
 
 const levelSlider = (level: number): string => {

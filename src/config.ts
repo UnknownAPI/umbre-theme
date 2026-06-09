@@ -56,7 +56,8 @@ export const accentFamilies = [
 ] as const;
 export type AccentFamily = (typeof accentFamilies)[number];
 
-const defaultOptionDetail = (detail: string): string => `${detail}. [default option]`;
+export const DEFAULT_OPTION_BADGE = "[default option]";
+const defaultOptionDetail = (detail: string): string => `${detail}. ${DEFAULT_OPTION_BADGE}`;
 
 export const dimVariants = [
   {
