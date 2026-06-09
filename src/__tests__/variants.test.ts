@@ -34,7 +34,8 @@ const expectedVariantCount =
   dimVariants.length *
   panelVariants.length *
   terminalVariants.length *
-  borderVariants.length;
+  borderVariants.length *
+  syntaxVariants.length;
 const validatedCoreVariantCount =
   modes.length * shadeVariants.length * accentFamilies.length * dimVariants.length * borderVariants.length;
 
@@ -48,7 +49,7 @@ describe("Umbre generated theme inventory", () => {
   });
 
   test("keeps variants generated on demand instead of contributed to the picker", () => {
-    expect(expectedVariantCount).toBe(106250);
+    expect(expectedVariantCount).toBe(318750);
     expect(createThemes().flatMap((theme) => theme.contribution)).toHaveLength(1);
   });
 });
