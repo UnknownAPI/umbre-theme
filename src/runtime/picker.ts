@@ -248,6 +248,8 @@ type RecommendedPreset = {
   settings: Omit<UmbreSettings, "systemAware">;
 };
 
+const defaultOptionBadge = "[default option]";
+
 const recommendedPresets = [
   {
     id: "light",
@@ -268,8 +270,8 @@ const recommendedPresets = [
   {
     id: "balanced",
     label: "Balanced",
-    description: "Default Umbre balance",
-    detail: "Middle shade with balanced syntax, panels, terminal, and soft hairline borders.",
+    description: "Balanced setup",
+    detail: `Middle shade with balanced syntax, panels, terminal, and soft hairline borders. ${defaultOptionBadge}`,
     settings: {
       mode: "dark",
       shade: defaultShadeForMode("dark"),
@@ -569,8 +571,6 @@ const settingSummary = (setting: { level: number; label: string }): string => {
 const settingDetail = (setting: { level: number; detail: string }): string => {
   return `${levelSlider(setting.level)}  ${setting.detail}`;
 };
-
-const defaultOptionBadge = "[default option]";
 
 const shadeLabel = (mode: Mode, shade: ShadeVariant): string => {
   return mode === "dark" ? shade.darkLabel : shade.lightLabel;
