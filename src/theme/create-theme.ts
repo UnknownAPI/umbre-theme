@@ -56,7 +56,7 @@ export const createTheme = (mode: Mode): BuiltTheme => {
       id: label,
       label,
       uiTheme: mode === "dark" ? "vs-dark" : "vs",
-      path: `./themes/${fileName}`,
+      path: `./${fileName}`,
       _watch: true,
     },
   };

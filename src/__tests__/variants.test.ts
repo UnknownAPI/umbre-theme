@@ -45,6 +45,8 @@ describe("Umbre generated theme inventory", () => {
 
     expect(themes).toHaveLength(1);
     expect(themes.map((theme) => theme.contribution.label)).toEqual(["Umbre"]);
+    expect(themes.map((theme) => theme.fileName)).toEqual(["umbre-theme.json"]);
+    expect(themes.map((theme) => theme.contribution.path)).toEqual(["./umbre-theme.json"]);
     expect(themes.every((theme) => theme.contribution._watch)).toBe(true);
   });
 

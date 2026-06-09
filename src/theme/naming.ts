@@ -6,7 +6,7 @@ export const themeLabel = (_mode?: Mode): string => product.displayName;
 
 export const legacyThemeLabel = (mode: Mode): string => `${product.displayName} ${titleCase(mode)}`;
 
-export const themeFileName = (_mode?: Mode): string => `${product.themeFilePrefix}-color-theme.json`;
+export const themeFileName = (_mode?: Mode): string => `${product.themeFilePrefix}-theme.json`;
 
 export const isThemeLabel = (label: string): boolean => {
   return label === themeLabel() || label === legacyThemeLabel("dark") || label === legacyThemeLabel("light");

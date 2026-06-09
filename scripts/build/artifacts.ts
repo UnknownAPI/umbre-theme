@@ -15,7 +15,6 @@ import {
   readmePath,
   screenshotsPath,
   rootDir,
-  themesDir,
 } from "@scripts/build/paths.ts";
 import { createThemes } from "@scripts/build/themes.ts";
 
@@ -86,7 +85,7 @@ const createExtensionManifest = (
     `onCommand:${commandIds.chooseFont}`,
     "onStartupFinished",
   ],
-  files: ["extension.js", "assets/**", "themes/**", "README.md", "LICENSE", "package.json"],
+  files: ["extension.js", "assets/**", "umbre-theme.json", "README.md", "LICENSE", "package.json"],
   engines: {
     vscode: "^1.100.0",
   },
@@ -141,10 +140,9 @@ const writeExtensionArtifacts = async (): Promise<void> => {
   const themes = createThemes();
   const packageMetadata = await readPackageMetadata();
 
-  await ensureDir(themesDir);
   await ensureDir(distAssetsDir);
   await Promise.all([
-    ...themes.map((theme) => writeJson(new URL(theme.fileName, themesDir), theme.document)),
+    ...themes.map((theme) => writeJson(new URL(theme.fileName, distDir), theme.document)),
     copyFile(logoPath, new URL("logo.png", distAssetsDir)),
     copyFile(screenshotsPath, new URL("screenshots.png", distAssetsDir)),
     copyDir(fontsPath, distFontsPath),
