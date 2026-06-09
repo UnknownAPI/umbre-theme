@@ -4,6 +4,7 @@ import {
   defaultAccent,
   defaultBorders,
   defaultDimming,
+  defaultMode,
   defaultPanels,
   defaultShadeForMode,
   defaultSyntax,
@@ -330,6 +331,7 @@ const pickMode = async (
     modes.map((mode) => ({
       label: itemLabel(titleCase(mode), current.mode === mode),
       description: `${titleCase(mode)} mode`,
+      ...(mode === defaultMode ? { detail: defaultOptionBadge } : {}),
       value: mode,
       current: current.mode === mode,
     })),
@@ -349,7 +351,7 @@ const pickShade = async (
     shadeVariants.map((shade) => ({
       label: itemLabel(`Level ${shade.level}`, current.shade.id === shade.id),
       description: shadeLabel(current.mode, shade),
-      detail: levelSlider(shade.level),
+      detail: shadeDetail(current.mode, shade),
       value: shade,
       current: current.shade.id === shade.id,
     })),
@@ -367,6 +369,7 @@ const pickAccent = async (
     accentFamilies.map((accent) => ({
       label: itemLabel(titleCase(accent), current.accent === accent),
       description: "Accent color",
+      ...(accent === defaultAccent ? { detail: defaultOptionBadge } : {}),
       value: accent,
       current: current.accent === accent,
     })),
@@ -567,8 +570,15 @@ const settingDetail = (setting: { level: number; detail: string }): string => {
   return `${levelSlider(setting.level)}  ${setting.detail}`;
 };
 
+const defaultOptionBadge = "[default option]";
+
 const shadeLabel = (mode: Mode, shade: ShadeVariant): string => {
   return mode === "dark" ? shade.darkLabel : shade.lightLabel;
+};
+
+const shadeDetail = (mode: Mode, shade: ShadeVariant): string => {
+  const slider = levelSlider(shade.level);
+  return shade.id === defaultShadeForMode(mode).id ? `${slider}  ${defaultOptionBadge}` : slider;
 };
 
 const levelSlider = (level: number): string => {
