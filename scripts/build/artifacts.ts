@@ -79,12 +79,7 @@ const createExtensionManifest = (
   type: "module",
   main: "./extension.js",
   icon: "assets/logo.png",
-  activationEvents: [
-    `onCommand:${commandIds.configure}`,
-    `onCommand:${commandIds.toggleOpposite}`,
-    `onCommand:${commandIds.chooseFont}`,
-    "onStartupFinished",
-  ],
+  activationEvents: ["onStartupFinished"],
   files: ["extension.js", "assets/**", "umbre-theme.json", "README.md", "LICENSE", "package.json"],
   engines: {
     vscode: "^1.100.0",
