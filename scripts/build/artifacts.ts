@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 
 import { commandContributions, type CommandContribution } from "@/extension/contributions.ts";
 import { commandIds, product } from "@/product.ts";
-import type { ThemeContribution } from "@/theme/types.ts";
+import type { BuiltTheme, ThemeContribution } from "@/theme/types.ts";
 import { copyDir, copyFile, ensureDir } from "@/utils/fs.ts";
 import { writeJson } from "@/utils/json.ts";
 import {
@@ -73,14 +73,21 @@ const readPackageMetadata = async (): Promise<ExtensionPackageMetadata> => {
 
 const createExtensionManifest = (
   packageMetadata: ExtensionPackageMetadata,
-  themes: ThemeContribution[],
+  themes: BuiltTheme[],
 ): ExtensionManifest => ({
   ...packageMetadata,
   type: "module",
   main: "./extension.js",
   icon: "assets/logo.png",
   activationEvents: ["onStartupFinished"],
-  files: ["extension.js", "assets/**", "umbre-theme.json", "README.md", "LICENSE", "package.json"],
+  files: [
+    "extension.js",
+    "assets/**",
+    ...themes.map((theme) => theme.fileName),
+    "README.md",
+    "LICENSE",
+    "package.json",
+  ],
   engines: {
     vscode: "^1.100.0",
   },
@@ -101,7 +108,7 @@ const createExtensionManifest = (
         },
       ],
     },
-    themes,
+    themes: themes.map((theme) => theme.contribution),
   },
 });
 
@@ -143,13 +150,7 @@ const writeExtensionArtifacts = async (): Promise<void> => {
     copyDir(fontsPath, distFontsPath),
     copyFile(readmePath, new URL("README.md", distDir)),
     copyFile(licensePath, new URL("LICENSE", distDir)),
-    writeJson(
-      new URL("package.json", distDir),
-      createExtensionManifest(
-        packageMetadata,
-        themes.map((theme) => theme.contribution),
-      ),
-    ),
+    writeJson(new URL("package.json", distDir), createExtensionManifest(packageMetadata, themes)),
   ]);
 
   console.log(`Built ${themes.length} ${product.displayName} themes in ${distDir.pathname}`);
