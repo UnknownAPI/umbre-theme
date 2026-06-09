@@ -11,7 +11,15 @@ export const createSyntax = (
   surfaces: Surfaces,
   syntaxVariant: SyntaxVariant,
 ): Syntax => {
-  const cacheKey = [mode, accentFamily, dim.id, surfaces.fg, surfaces.muted, surfaces.subtle, syntaxVariant.id].join(":");
+  const cacheKey = [
+    mode,
+    accentFamily,
+    dim.id,
+    surfaces.fg,
+    surfaces.muted,
+    surfaces.subtle,
+    syntaxVariant.id,
+  ].join(":");
   const cached = syntaxCache.get(cacheKey);
   if (cached) return cached;
 
@@ -73,7 +81,7 @@ export const createSyntax = (
         tag: tone("blue"),
         attribute: tone("sky", softShade),
         property: tone("sky"),
-        parameter: mode === "dark" ? tone("zinc", 300) : tone("zinc", 700),
+        parameter: tone("zinc", softShade),
         special: tone("amber", softShade),
         markup: tone("rose", softShade),
         invalid: tone("red", vividShade),
