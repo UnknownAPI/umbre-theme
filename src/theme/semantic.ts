@@ -13,7 +13,7 @@ export const semanticTokenColors = ({ syntax }: ThemeModel): Record<string, Sema
   type: syntax.type,
   "type.defaultLibrary": syntax.tag,
   typeParameter: syntax.type,
-  parameter: syntax.foreground,
+  parameter: syntax.parameter,
   property: syntax.foreground,
   enumMember: syntax.regexp,
   event: syntax.operator,

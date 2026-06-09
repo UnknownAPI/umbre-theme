@@ -319,8 +319,8 @@ describe("Umbre variant colors", () => {
   });
 });
 
-describe("Umbre syntax styles", () => {
-  test("generates different syntax colors for flare and frost styles", () => {
+describe("Umbre syntax variants", () => {
+  test("generates different syntax colors for flare and frost variants", () => {
     const umbreModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
@@ -332,7 +332,7 @@ describe("Umbre syntax styles", () => {
       syntaxVariant: defaultSyntax,
     });
 
-    const flareVariant = syntaxVariants.find((style) => style.id === "flare")!;
+    const flareVariant = syntaxVariants.find((variant) => variant.id === "flare")!;
     const flareModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
@@ -344,7 +344,7 @@ describe("Umbre syntax styles", () => {
       syntaxVariant: flareVariant,
     });
 
-    const frostVariant = syntaxVariants.find((style) => style.id === "frost")!;
+    const frostVariant = syntaxVariants.find((variant) => variant.id === "frost")!;
     const frostModel = createThemeModel({
       mode: "dark",
       shade: shadeVariants[2],
@@ -359,6 +359,46 @@ describe("Umbre syntax styles", () => {
     expect(flareModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
     expect(frostModel.syntax.keyword).not.toBe(umbreModel.syntax.keyword);
     expect(frostModel.syntax.keyword).not.toBe(flareModel.syntax.keyword);
+  });
+
+  test("uses syntax.parameter for function argument token and semantic colors", () => {
+    const frostVariant = syntaxVariants.find((variant) => variant.id === "frost")!;
+    const model = createThemeModel({
+      mode: "dark",
+      shade: shadeVariants[2],
+      accentFamily: "amber",
+      dim: dimVariants[0],
+      panels: defaultPanels,
+      terminal: defaultTerminal,
+      borders: borderVariants[2],
+      syntaxVariant: frostVariant,
+    });
+    const tokens = tokenColors(model);
+    const semanticTokens = semanticTokenColors(model);
+    const functionArguments = tokens.find((token) => token.name === "Function Arguments");
+    const functionCallArguments = tokens.find((token) => token.name === "Function Call Arguments");
+
+    expect(model.syntax.parameter).not.toBe(model.syntax.foreground);
+    expect(functionArguments?.settings.foreground).toBe(model.syntax.parameter);
+    expect(functionCallArguments?.settings.foreground).toBe(model.syntax.parameter);
+    expect(semanticTokens.parameter).toBe(model.syntax.parameter);
+  });
+
+  test("parameter colors differ across syntax variants", () => {
+    const models = syntaxVariants.map((syntaxVariant) =>
+      createThemeModel({
+        mode: "dark",
+        shade: shadeVariants[2],
+        accentFamily: "amber",
+        dim: dimVariants[0],
+        panels: defaultPanels,
+        terminal: defaultTerminal,
+        borders: borderVariants[2],
+        syntaxVariant,
+      }),
+    );
+
+    expect(new Set(models.map((model) => model.syntax.parameter)).size).toBe(syntaxVariants.length);
   });
 });
 

@@ -16,7 +16,7 @@ export const codeTokenColors = ({ syntax }: ThemeModel): TokenColor[] => [
     ["variable.function", "meta.function-call.generic", "support.function.go"],
     syntax.method,
   ),
-  tokenRule("Function Arguments", ["variable.parameter", "meta.parameter"], syntax.foreground),
+  tokenRule("Function Arguments", ["variable.parameter", "meta.parameter"], syntax.parameter),
   tokenRule("Imports and Packages", ["entity.name.import", "entity.name.package"], syntax.foreground),
   tokenRule("Entity Name", ["entity.name"], syntax.class),
   tokenRule("Tag", ["entity.name.tag", "meta.tag.sgml"], syntax.tag),

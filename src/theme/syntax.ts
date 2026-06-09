@@ -1,4 +1,4 @@
-import type { AccentFamily, DimVariant, Mode, SyntaxVariant } from "@/config.ts";
+import type { DimVariant, Mode, SyntaxVariant } from "@/config.ts";
 import type { Surfaces, Syntax } from "@/theme/model-types.ts";
 import { mix, tw, type Shade } from "@/theme/palette.ts";
 
@@ -6,20 +6,11 @@ const syntaxCache = new Map<string, Syntax>();
 
 export const createSyntax = (
   mode: Mode,
-  accentFamily: AccentFamily,
   dim: DimVariant,
   surfaces: Surfaces,
   syntaxVariant: SyntaxVariant,
 ): Syntax => {
-  const cacheKey = [
-    mode,
-    accentFamily,
-    dim.id,
-    surfaces.fg,
-    surfaces.muted,
-    surfaces.subtle,
-    syntaxVariant.id,
-  ].join(":");
+  const cacheKey = [mode, dim.id, surfaces.fg, surfaces.muted, surfaces.subtle, syntaxVariant.id].join(":");
   const cached = syntaxCache.get(cacheKey);
   if (cached) return cached;
 

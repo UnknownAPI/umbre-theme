@@ -38,7 +38,7 @@ export const createThemeModel = ({
   syntaxVariant,
 }: ThemeModelInput): ThemeModel => {
   const surfaces = createSurfaces(mode, shade, panels);
-  const syntax = createSyntax(mode, accentFamily, dim, surfaces, syntaxVariant);
+  const syntax = createSyntax(mode, dim, surfaces, syntaxVariant);
 
   return {
     mode,
@@ -53,6 +53,6 @@ export const createThemeModel = ({
     surfaces,
     syntax,
     uiSyntax:
-      dim.id === defaultDimming.id ? syntax : createSyntax(mode, accentFamily, defaultDimming, surfaces, syntaxVariant),
+      dim.id === defaultDimming.id ? syntax : createSyntax(mode, defaultDimming, surfaces, syntaxVariant),
   };
 };
