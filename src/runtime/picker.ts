@@ -254,7 +254,7 @@ const recommendedPresets = [
     id: "light",
     label: "Light",
     description: "Beautiful light setup",
-    detail: "Light surface with balanced syntax, panels, terminal, and soft hairline borders.",
+    detail: "Light surface with default syntax colors, panels, terminal, and soft hairline borders.",
     settings: {
       mode: "light",
       shade: shadeVariants[0],
@@ -270,7 +270,7 @@ const recommendedPresets = [
     id: "balanced",
     label: "Balanced",
     description: "Balanced setup",
-    detail: `Middle shade with balanced syntax, panels, terminal, and soft hairline borders. ${DEFAULT_OPTION_BADGE}`,
+    detail: `Middle shade with default syntax colors, panels, terminal, and soft hairline borders. ${DEFAULT_OPTION_BADGE}`,
     settings: {
       mode: "dark",
       shade: defaultShadeForMode("dark"),
@@ -286,7 +286,7 @@ const recommendedPresets = [
     id: "pure-black",
     label: "Pure black",
     description: "Very dark minimal setup",
-    detail: "True black surface with balanced syntax, panels, terminal, and soft hairline borders.",
+    detail: "True black surface with default syntax colors, panels, terminal, and soft hairline borders.",
     settings: {
       mode: "dark",
       shade: shadeVariants[4],
